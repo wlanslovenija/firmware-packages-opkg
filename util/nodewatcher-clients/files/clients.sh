@@ -12,16 +12,6 @@ MODULE_SERIAL=1
 #
 report()
 {
-  # Nodogsplash
-  /usr/bin/ndsctl -s /var/run/nodogsplash.sock status >/dev/null 2>/dev/null
-
-  if [ "$?" == "0" ]; then
-    /usr/bin/ndsctl -s /var/run/nodogsplash.sock clients | awk -f /lib/nodewatcher/parse_nds.awk
-    show_entry_from_file "nds.down" /var/nds_status "0"
-  else
-    show_entry "nds.down" 1
-  fi
-
   # DHCP client leases
   LEASES=$(cat /tmp/dhcp.leases | awk '{ print $3 }')
   client_id=0

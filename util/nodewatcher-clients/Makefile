@@ -9,7 +9,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/nodewatcher-clients
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+nodewatcher-core +nullhttpd +nodogsplash
+  DEPENDS:=+nodewatcher-core +nullhttpd
   TITLE:=nodewatcher-clients
 endef
 
@@ -23,10 +23,6 @@ define Build/Compile
 endef
 
 define Package/nodewatcher-clients/install
-	# Nodogsplash output parser
-	$(INSTALL_DIR) $(1)/lib/nodewatcher
-	$(CP) ./files/parse_nds.awk $(1)/lib/nodewatcher/parse_nds.awk
-	
 	# Nullhttpd templates
 	$(INSTALL_DIR) $(1)/www/nullhttpd
 	$(CP) -r ./files/htdocs/* $(1)/www/nullhttpd
