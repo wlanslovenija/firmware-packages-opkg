@@ -9,7 +9,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/nodewatcher-core
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+busybox +cronscripts
+  DEPENDS:=+busybox +cronscripts +tc +ip
   TITLE:=nodewatcher-core
 endef
 
