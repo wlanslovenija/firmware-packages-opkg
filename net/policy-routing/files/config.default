@@ -1,0 +1,20 @@
+
+# First you have to define routing tables
+# config table mesh
+# 	option id	20
+
+# Then you can define policy rules
+# config policy
+# 	option dest_ip	'x.y.z.w'
+#	option table	'main'
+#	option priority	999
+#
+# config policy
+# 	option device	'eth1'
+# 	option table	'main'
+#	option priority	1000
+#
+# config policy
+#	option table	'mesh'
+#	option priority	1000
+
