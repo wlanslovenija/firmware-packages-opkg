@@ -25,7 +25,7 @@ endef
 define Package/nodewatcher-clients/install
 	# Nullhttpd templates
 	$(INSTALL_DIR) $(1)/www/nullhttpd
-	$(INSTALL_DATA) -r ./files/htdocs/* $(1)/www/nullhttpd
+	$(CP) -r ./files/htdocs/* $(1)/www/nullhttpd
 	
 	# Actions
 	$(INSTALL_DIR) $(1)/etc/actions.d
