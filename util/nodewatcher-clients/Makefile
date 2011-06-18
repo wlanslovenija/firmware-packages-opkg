@@ -25,7 +25,7 @@ endef
 define Package/nodewatcher-clients/install
 	# Nullhttpd templates
 	$(INSTALL_DIR) $(1)/www/nullhttpd
-	$(CP) -r ./files/htdocs/* $(1)/www/nullhttpd
+	$(INSTALL_DATA) -r ./files/htdocs/* $(1)/www/nullhttpd
 	
 	# Actions
 	$(INSTALL_DIR) $(1)/etc/actions.d
@@ -34,11 +34,11 @@ define Package/nodewatcher-clients/install
 	
 	# Common functions
 	$(INSTALL_DIR) $(1)/lib/nodewatcher
-	$(CP) ./files/actions_common.sh $(1)/lib/nodewatcher/actions.sh
+	$(INSTALL_DATA) ./files/actions_common.sh $(1)/lib/nodewatcher/actions.sh
 	
 	# Modules
 	$(INSTALL_DIR) $(1)/etc/nodewatcher.d
-	$(CP) ./files/clients.sh $(1)/etc/nodewatcher.d/clients.sh
+	$(INSTALL_DATA) ./files/clients.sh $(1)/etc/nodewatcher.d/clients.sh
 endef
 
 $(eval $(call BuildPackage,nodewatcher-clients))

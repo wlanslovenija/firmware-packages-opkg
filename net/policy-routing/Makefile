@@ -27,7 +27,7 @@ define Package/policy-routing/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/routing.init $(1)/etc/init.d/routing
 	$(INSTALL_DIR) $(1)/etc/config
-	$(CP) ./files/config.default $(1)/etc/config/routing
+	$(INSTALL_DATA) ./files/config.default $(1)/etc/config/routing
 endef
 
 $(eval $(call BuildPackage,policy-routing))

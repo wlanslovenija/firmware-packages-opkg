@@ -31,7 +31,7 @@ define Package/nodewatcher-watchdog/install
 
 	# Modules
 	$(INSTALL_DIR) $(1)/etc/nodewatcher.d
-	$(CP) ./files/watchdog.sh $(1)/etc/nodewatcher.d/watchdog.sh
+	$(INSTALL_DATA) ./files/watchdog.sh $(1)/etc/nodewatcher.d/watchdog.sh
 endef
 
 $(eval $(call BuildPackage,nodewatcher-watchdog))

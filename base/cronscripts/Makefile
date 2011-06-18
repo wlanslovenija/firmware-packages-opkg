@@ -25,7 +25,7 @@ endef
 
 define Package/cronscripts/install
 	$(INSTALL_DIR) $(1)/etc/crontabs
-	$(CP) ./files/main.crontab $(1)/etc/crontabs/root
+	$(INSTALL_DATA) ./files/main.crontab $(1)/etc/crontabs/root
 	$(INSTALL_DIR) $(1)/etc/crontabs/run.5
 	$(INSTALL_DIR) $(1)/etc/crontabs/run.10
 	$(INSTALL_DIR) $(1)/etc/crontabs/run.30

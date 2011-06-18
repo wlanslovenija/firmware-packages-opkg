@@ -34,14 +34,14 @@ define Package/nodewatcher-core/install
 	
 	# Common functions
 	$(INSTALL_DIR) $(1)/lib/nodewatcher
-	$(CP) ./files/nodewatcher_common.sh $(1)/lib/nodewatcher/common.sh
+	$(INSTALL_DATA) ./files/nodewatcher_common.sh $(1)/lib/nodewatcher/common.sh
 	
 	# Modules
 	$(INSTALL_DIR) $(1)/etc/nodewatcher.d
-	$(CP) ./files/modules/general.sh $(1)/etc/nodewatcher.d/general.sh
-	$(CP) ./files/modules/wireless.sh $(1)/etc/nodewatcher.d/wireless.sh
-	$(CP) ./files/modules/vpn.sh $(1)/etc/nodewatcher.d/vpn.sh
-	$(CP) ./files/modules/traffic.sh $(1)/etc/nodewatcher.d/traffic.sh
+	$(INSTALL_DATA) ./files/modules/general.sh $(1)/etc/nodewatcher.d/general.sh
+	$(INSTALL_DATA) ./files/modules/wireless.sh $(1)/etc/nodewatcher.d/wireless.sh
+	$(INSTALL_DATA) ./files/modules/vpn.sh $(1)/etc/nodewatcher.d/vpn.sh
+	$(INSTALL_DATA) ./files/modules/traffic.sh $(1)/etc/nodewatcher.d/traffic.sh
 endef
 
 $(eval $(call BuildPackage,nodewatcher-core))

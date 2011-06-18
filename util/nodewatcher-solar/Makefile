@@ -29,7 +29,7 @@ define Package/nodewatcher-solar/install
 
 	# Modules
 	$(INSTALL_DIR) $(1)/etc/nodewatcher.d
-	$(CP) ./files/solar.sh $(1)/etc/nodewatcher.d/solar.sh
+	$(INSTALL_DATA) ./files/solar.sh $(1)/etc/nodewatcher.d/solar.sh
 endef
 
 $(eval $(call BuildPackage,nodewatcher-solar))

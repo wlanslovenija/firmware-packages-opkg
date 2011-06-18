@@ -71,12 +71,12 @@ endef
 
 define Package/digitemp/install
 	$(INSTALL_DIR) $(1)/usr/bin/
-	$(CP) $(PKG_BUILD_DIR)/digitemp_DS9097 $(1)/usr/bin/
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/digitemp_DS9097 $(1)/usr/bin/
 endef
 
 define Package/digitemp-usb/install
 	$(INSTALL_DIR) $(1)/usr/bin/
-	$(CP) $(PKG_BUILD_DIR)/digitemp_DS2490 $(1)/usr/bin/
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/digitemp_DS2490 $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,digitemp))

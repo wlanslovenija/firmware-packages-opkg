@@ -25,7 +25,7 @@ endef
 define Package/nodewatcher-digitemp/install
 	# Modules
 	$(INSTALL_DIR) $(1)/etc/nodewatcher.d
-	$(CP) ./files/digitemp.sh $(1)/etc/nodewatcher.d/digitemp.sh
+	$(INSTALL_DATA) ./files/digitemp.sh $(1)/etc/nodewatcher.d/digitemp.sh
 endef
 
 $(eval $(call BuildPackage,nodewatcher-digitemp))
