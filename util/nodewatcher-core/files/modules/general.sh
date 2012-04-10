@@ -19,12 +19,18 @@ report()
   show_entry "general.loadavg" "`cat /proc/loadavg`"
   
   # Memory
-  # TODO should be restructured into
-  # general.memory.free
-  # general.memory.buffers
-  # general.memory.cache
-  show_entry "general.memfree" "`cat /proc/meminfo | awk '/^MemFree/ { print $2 }'`"
-  show_entry "general.buffers" "`cat /proc/meminfo | awk '/^Buffers/ { print $2 }'`"
-  show_entry "general.cached" "`cat /proc/meminfo | awk '/^Cached/ { print $2 }'`"
+  local memfree="`cat /proc/meminfo | awk '/^MemFree/ { print $2 }'`"
+  local buffers="`cat /proc/meminfo | awk '/^Buffers/ { print $2 }'`"
+  local cached="`cat /proc/meminfo | awk '/^Cached/ { print $2 }'`"
+  
+  # TODO These are now deprecated and should be removed in a later
+  # version (when the old nodewatcher instance is replaced)
+  show_entry "general.memfree" "${memfree}"
+  show_entry "general.buffers" "${buffers}"
+  show_entry "general.cached" "${cached}"
+  
+  show_entry "general.memory.free" "${memfree}"
+  show_entry "general.memory.buffers" "${buffers}"
+  show_entry "general.memory.cache" "${cached}"
 }
 

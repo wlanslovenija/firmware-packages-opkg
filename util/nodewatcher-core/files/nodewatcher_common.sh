@@ -56,4 +56,13 @@ show_entry_from_file()
   fi
 }
 
+#
+# Converts a variable so it is suitable for using inside
+# the key hierarchy.
+#
+convert_to_key()
+{
+  local key="$1"
+  eval $key="$(eval echo \$$key | sed 's/[\. ]\+/-/g')"
+}
 

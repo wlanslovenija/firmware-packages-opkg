@@ -20,11 +20,16 @@ report()
     rcv=`echo $entry | cut -d '=' -f 2`
     xmt=`echo $entry | cut -d '=' -f 3`
     
-    if [[ "$iface" != "lo" && "$iface" != "wmaster0" ]]; then
-      if [[ "`ip link show ${iface} | head -n 1 | grep UP`" != "" ]]; then
-        show_entry "iface.${iface}.down" $rcv
-        show_entry "iface.${iface}.up" $xmt
-      fi
+    # Check interface metadata
+    local iface_meta="$(ip link show ${iface})"
+    local iface_mac="`echo $iface_meta | grep -Eo 'link/ether ..:..:..:..:..:..' | cut -d ' ' -f 2`"
+    
+    # Skip all non-ethernet interfaces
+    if [[ "$iface_mac" != "" ]]; then
+      convert_to_key iface
+      show_entry "iface.${iface}.mac" $iface_mac
+      show_entry "iface.${iface}.down" $rcv
+      show_entry "iface.${iface}.up" $xmt
     fi
   done
 }

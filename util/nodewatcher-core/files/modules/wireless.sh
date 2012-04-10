@@ -18,7 +18,7 @@ show_wifi_entry()
   local prefix
   
   if [ "${iface_name}" != "" ]; then
-    iface_name="$(echo $iface_name | sed 's/\./-/')"
+    convert_to_key iface_name
     prefix="wireless.radios.${iface_name}"
   else
     prefix="wifi"
@@ -35,16 +35,23 @@ show_interface()
   local iface="$1"
   iface_name="$2"
   local iwace_data="`iwconfig ${iface} 2>/dev/null`"
-  local iface_data="`ifconfig ${iface} 2>/dev/null`"
+  local iface_data="`ip link show ${iface} 2>/dev/null`"
+  
+  # Skip non-ethernet interfaces as they have no useful stuff to report
+  local iface_mac="`echo ${iface_data} | grep -Eo 'link/ether ..:..:..:..:..:..' | cut -d ' ' -f 2`"
+  if [[ "${iface_mac}" == "" ]]; then
+    return
+  fi
   
   # Display interface information
-  show_wifi_entry "bssid" "`echo "${iwace_data}" | grep Cell | awk '{ print $5 }'`"
-  show_wifi_entry "essid" "`echo "${iwace_data}" | grep ESSID | awk '{ split($4, a, \"\\"\"); printf(\"%s\", a[2]); }' `"
+  show_wifi_entry "mode" "`echo "${iwace_data}" | grep -Eo 'Mode:[A-Za-z-]+' | cut -d ':' -f 2 | tr '[A-Z]' '[a-z]'`"
+  show_wifi_entry "bssid" "`echo "${iwace_data}" | grep -Eo 'Cell. ..:..:..:..:..:..' | cut -d ' ' -f 2`"
+  show_wifi_entry "essid" "`echo "${iwace_data}" | grep -Eo 'ESSID.".+"' | grep -Eo '[^"]+' | tail -n 1 `"
   show_wifi_entry "frequency" "`echo "${iwace_data}" | grep -Eo 'Frequency.([0-9]+.[0-9]+) GHz' | grep -Eo '[0-9]+.[0-9]+'`"
   
   # Commented out because of the iwlist (madwifi) memory leak, #209
   #show_entry "wifi.cells" "`iwlist scan 2>/dev/null | grep 'Cell.*Address' | wc -l`"
-  show_wifi_entry "mac" "`echo "${iface_data}" | grep HWaddr | awk '{ print $5 }' | head -n 1`"
+  show_wifi_entry "mac" "${iface_mac}"
   show_wifi_entry "rts" "`echo "${iwace_data}" | grep -Eo 'RTS thr.(off|[0-9]+ B)' | grep -Eo 'off|[0-9]+'`"
   show_wifi_entry "frag" "`echo "${iwace_data}" | grep -Eo 'Fragment thr.(off|[0-9]+ B)' | grep -Eo 'off|[0-9]+'`"
   
@@ -62,7 +69,7 @@ show_interface()
   show_wifi_entry "bitrate" "${bitrate}"
   
   # Report signal and noise levels
-  local lqn_data="`cat /proc/net/wireless | grep ${iface}`"
+  local lqn_data="`cat /proc/net/wireless | grep -E "(^| )${iface}:"`"
   show_wifi_entry "signal" "`echo ${lqn_data} | awk '{ print $4 }' | cut -d '.' -f 1`"
   show_wifi_entry "noise" "`echo ${lqn_data} | awk '{ print $5 }' | cut -d '.' -f 1`"
 }
