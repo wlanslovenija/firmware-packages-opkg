@@ -18,6 +18,7 @@ show_wifi_entry()
   local prefix
   
   if [ "${iface_name}" != "" ]; then
+    iface_name="$(echo $iface_name | sed 's/\./-/')"
     prefix="wireless.radios.${iface_name}"
   else
     prefix="wifi"
@@ -39,7 +40,7 @@ show_interface()
   # Display interface information
   show_wifi_entry "bssid" "`echo "${iwace_data}" | grep Cell | awk '{ print $5 }'`"
   show_wifi_entry "essid" "`echo "${iwace_data}" | grep ESSID | awk '{ split($4, a, \"\\"\"); printf(\"%s\", a[2]); }' `"
-  show_wifi_entry "frequency" "`echo "${iwace_data}" | grep Frequency | awk '{ print $2 }' | cut -d ':' -f 2`"
+  show_wifi_entry "frequency" "`echo "${iwace_data}" | grep -Eo 'Frequency.([0-9]+.[0-9]+) GHz' | grep -Eo '[0-9]+.[0-9]+'`"
   
   # Commented out because of the iwlist (madwifi) memory leak, #209
   #show_entry "wifi.cells" "`iwlist scan 2>/dev/null | grep 'Cell.*Address' | wc -l`"
