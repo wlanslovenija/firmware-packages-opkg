@@ -2,12 +2,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nullhttpd
 PKG_VERSION:=0.1
-PKG_RELEASE:=8
-PKG_REV:=tip
+PKG_RELEASE:=9
+PKG_REV:=HEAD
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=http://dev.wlan-si.net/hg/packages/nullhttpd
-PKG_SOURCE_PROTO:=hg
+PKG_SOURCE_URL:=git://github.com/wlanslovenija/nullhttpd.git
+PKG_SOURCE_PROTO:=git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=$(PKG_REV)
 
