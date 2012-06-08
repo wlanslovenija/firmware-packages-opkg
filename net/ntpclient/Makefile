@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ntpclient
 PKG_VERSION:=2007_365
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://doolittle.icarus.com/ntpclient/
@@ -24,6 +24,7 @@ define Package/ntpclient
   SUBMENU:=Time Synchronization
   SECTION:=net
   CATEGORY:=Network
+  DEPENDS:=+librt
   TITLE:=NTP (Network Time Protocol) client
   URL:=http://doolittle.icarus.com/ntpclient/
 endef
