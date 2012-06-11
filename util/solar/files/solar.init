@@ -17,4 +17,5 @@ start() {
 }
 
 stop() {
+	exit 0
 }
