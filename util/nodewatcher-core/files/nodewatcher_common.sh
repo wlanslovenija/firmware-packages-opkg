@@ -23,7 +23,7 @@ get_client_subnets()
 
 get_local_ip()
 {
-  LOCAL_IP="`uci get network.subnet0.ipaddr`"
+  LOCAL_IP="`uci -q get network.subnet0.ipaddr`"
 }
 
 #
@@ -32,10 +32,10 @@ get_local_ip()
 #
 show_entry()
 {
-  KEY="$1"
-  VALUE="$2"
+  local key="$1"
+  local value="$2"
   
-  echo "${KEY}: ${VALUE}"
+  echo "${key}: ${value}"
 }
 
 #
@@ -45,15 +45,31 @@ show_entry()
 #
 show_entry_from_file()
 {
-  KEY="$1"
-  FNAME="$2"
-  DEF="$3"
+  local key="$1"
+  local filename="$2"
+  local default="$3"
 
-  if [ -f "${FNAME}" ]; then
-    show_entry "${KEY}" "`cat ${FNAME}`"
+  if [ -f "${filename}" ]; then
+    show_entry "${key}" "`cat ${filename}`"
   else
-    show_entry "${KEY}" "${DEF}"
+    show_entry "${key}" "${default}"
   fi
+}
+
+#
+# A helper function for outputing key-value pairs where
+# value is read from UCI.
+#
+show_uci_simple()
+{
+  local key="$1"
+  local uci_key="$2"
+  local default="$3"
+  local uci_value="`uci -q get ${uci_key}`"
+  if [[ "$?" != "0" ]]; then
+    uci_value="${default}"
+  fi
+  show_entry "${key}" "${uci_value}"
 }
 
 #

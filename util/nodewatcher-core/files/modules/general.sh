@@ -12,11 +12,12 @@ MODULE_SERIAL=1
 #
 report()
 {
-  show_entry_from_file "general.uuid" /etc/uuid "missing"
+  show_uci_simple "general.uuid" system.@system[0].uuid
+  show_uci_simple "general.hostname" system.@system[0].hostname
   show_entry_from_file "general.version" /etc/version "missing"
   show_entry "general.local_time" "`date +%s`"
-  show_entry "general.uptime" "`cat /proc/uptime`"
-  show_entry "general.loadavg" "`cat /proc/loadavg`"
+  show_entry_from_file "general.uptime" /proc/uptime
+  show_entry_from_file "general.loadavg" /proc/loadavg
   
   # Memory
   local memfree="`cat /proc/meminfo | awk '/^MemFree/ { print $2 }'`"
