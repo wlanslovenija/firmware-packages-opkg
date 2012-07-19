@@ -49,6 +49,9 @@ mode="$1"
 
 if [ "$mode" == "" ]; then
   # Output header when no mode passed in
+  echo "Content-Type: text/plain"
+  echo ""
+
   echo ";"
   echo "; nodewatcher monitoring system"
   echo ";"
