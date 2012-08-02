@@ -5,7 +5,7 @@
 
 # Module metadata
 MODULE_ID="core.general"
-MODULE_SERIAL=1
+MODULE_SERIAL=2
 
 #
 # Report output function
