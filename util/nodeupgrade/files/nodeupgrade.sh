@@ -38,8 +38,13 @@ node_upgrade() {
 	fi
 	
 	if [[ -n "$FLASH_IMAGE" ]]; then
-		echo "Flashing '$FLASH_IMAGE'."
-		mtd $CONF_TGZ write "$FLASH_IMAGE" linux || flashing_failed
+		if [[ "${FLASH_IMAGE##*.}" == "bin" ]]; then  # TODO: Should probably be done differently
+			echo "Flashing '$FLASH_IMAGE'."
+			mtd $CONF_TGZ write "$FLASH_IMAGE" firmware || flashing_failed
+		else
+			echo "Flashing '$FLASH_IMAGE'."
+			mtd $CONF_TGZ write "$FLASH_IMAGE" linux || flashing_failed
+		fi
 	else
 		if [[ -n "$KERNEL_IMAGE" ]]; then
 			echo "Flashing '$KERNEL_IMAGE'."
