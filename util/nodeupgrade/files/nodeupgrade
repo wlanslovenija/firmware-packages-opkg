@@ -146,23 +146,36 @@ check_partitions() {
 }
 
 get_magic() {
-	cat "$1" 2>/dev/null | dd bs=2 count=1 2>/dev/null | hexdump -v -n 2 -e '1/1 "%02x"' 2>/dev/null
+	dd if="$2" bs="$1" count=1 2>/dev/null | hexdump -v -n "$1" -e '1/1 "%02x"' 2>/dev/null
 }
 
 check_trx() {
-	case "$(get_magic "$1")" in
-		4844)
+	case "$(get_magic 4 "$1")" in
+		48445230)  # "HDR0" for TRXv1 and TRXv2
 			return 0
 			;;
 		*)
 			echo "Image '$1' is not a .trx file."
 			return 1
 		;;
-	esac	
+	esac
+}
+
+check_bin() {
+	# TODO: Add magic values for other boards (eg. "3G2V", "W54U")
+	case "$(get_magic 4 "$1")" in
+		01000000)  # wlan-si firmware for TL-WR741ND v2.4
+			return 0
+			;;
+		*)
+			echo "Image '$1' is probably not a .bin file."
+			return 1
+		;;
+	esac
 }
 
 check_jffs2() {
-	case "$(get_magic "$1")" in
+	case "$(get_magic 2 "$1")" in
 		1985)
 			return 0
 			;;
