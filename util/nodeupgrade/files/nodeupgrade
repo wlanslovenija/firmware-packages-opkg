@@ -67,6 +67,7 @@ EOF
 include /lib/upgrade
 
 image_type() {
+	# TODO: This should probably be called partition detection, type detection should instead be based on file extensions
 	local base="$(basename "$1")"
 	base=${base%.*}
 	local length=$(( ${#base} - 23 ))
@@ -82,7 +83,9 @@ image_type() {
 		kernel)
 			;;
 		*)
-			base=""
+			# Use file extension  # XXX: Mixing partitions and file types (check code elsewhere for '"bin"' or 'bin)')
+			base="$(basename "$1")"
+			base=${base##*.}
 			;;
 	esac
 	type=$base
@@ -128,7 +131,13 @@ remote_file_hostname() {
 }
 
 check_partitions() {
-	if [[ "$IMAGES_COUNT" -eq 1 ]]; then
+	# TODO: Partitions should be part of file names
+	if [[ "$IMAGES_COUNT" -eq 1 && "$type" == "bin" ]]; then  # TODO: Should probably be done differently
+		if ! grep -q -E '"firmware"$' /proc/mtd 2>/dev/null; then
+			echo "Missing required partition(s)."
+			exit 1
+		fi
+	elif [[ "$IMAGES_COUNT" -eq 1 ]]; then
 		if ! grep -q -E '"linux"$' /proc/mtd 2>/dev/null; then
 			echo "Missing required partition(s)."
 			exit 1
@@ -146,23 +155,36 @@ check_partitions() {
 }
 
 get_magic() {
-	cat "$1" 2>/dev/null | dd bs=2 count=1 2>/dev/null | hexdump -v -n 2 -e '1/1 "%02x"' 2>/dev/null
+	dd if="$2" bs="$1" count=1 2>/dev/null | hexdump -v -n "$1" -e '1/1 "%02x"' 2>/dev/null
 }
 
 check_trx() {
-	case "$(get_magic "$1")" in
-		4844)
+	case "$(get_magic 4 "$1")" in
+		48445230)  # "HDR0" for TRXv1 and TRXv2
 			return 0
 			;;
 		*)
 			echo "Image '$1' is not a .trx file."
 			return 1
 		;;
-	esac	
+	esac
+}
+
+check_bin() {
+	# TODO: Add magic values for other boards (eg. "3G2V", "W54U")
+	case "$(get_magic 4 "$1")" in
+		01000000)  # wlan-si firmware for TL-WR741ND v2.4
+			return 0
+			;;
+		*)
+			echo "Image '$1' is probably not a .bin file."
+			return 1
+		;;
+	esac
 }
 
 check_jffs2() {
-	case "$(get_magic "$1")" in
+	case "$(get_magic 2 "$1")" in
 		1985)
 			return 0
 			;;
@@ -224,6 +246,9 @@ check_image() {
 			;;
 		kernel)
 			check_lzma "$image" || return 1
+			;;
+		bin)
+			check_bin "$image" || return 1
 			;;
 		*)
 			check_trx "$image" || return 1
@@ -387,12 +412,15 @@ for image in $IMAGES; do
 	# We first check for image type as this also checks for image filename length
 	image_type "$image"
 	if [[ "$IMAGES_COUNT" -eq 1 ]]; then
-		if [[ -n "$type" ]]; then
-			echo "Invalid image type or missing image filename argument."
-			exit 1
-		fi
-
-		FLASH_IMAGE="$image"
+		case "$type" in
+			bin)
+				FLASH_IMAGE="$image"
+				;;
+			*)  # "root" or "kernel"
+				echo "Invalid image type or missing image filename argument."
+				exit 1
+				;;
+		esac
 	elif [[ -n "$ROOT_IMAGE" ]]; then
 		case "$type" in
 			root)
@@ -553,7 +581,7 @@ killall -q -USR1 olsrd 2>/dev/null
 
 # And we fly
 echo "Switching to ramdisk and upgrading."
-run_ramfs '. /etc/functions.sh; include /lib/upgrade; node_upgrade'
+run_ramfs '[ -e /etc/functions.sh ] && . /etc/functions.sh || . /lib/functions.sh; include /lib/upgrade; node_upgrade'
 
 # We should not come here
 flashing_failed
