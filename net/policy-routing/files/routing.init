@@ -20,6 +20,10 @@ config_cb() {
 			config_get src_ip "$cfg" src_ip
 			config_get table "$cfg" table
 			config_get priority "$cfg" priority
+
+			if network_get_device IFNAME "$device"; then
+				device=$IFNAME
+			fi
 			
 			# Generate the rule
 			rule=""
@@ -44,6 +48,8 @@ init_rules()
 
 start() 
 {
+	. /lib/functions/network.sh
+
 	# Backup preset routing tables
 	[ -f ${IPROUTE2_TABLES} ] && cp ${IPROUTE2_TABLES} ${IPROUTE2_TABLES}.default
 	
