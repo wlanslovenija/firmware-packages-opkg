@@ -31,10 +31,10 @@ define Package/telemetryd/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/telemetry-command $(1)/usr/bin/telemetry-command
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/telemetryd.init $(1)/etc/init.d/telemetryd
-
-        # Nodewatcher modules
-        $(INSTALL_DIR) $(1)/etc/nodewatcher.d
-        $(INSTALL_DATA) ./files/telemetry.sh $(1)/etc/nodewatcher.d/telemetry.sh
+	
+	# Nodewatcher modules
+	$(INSTALL_DIR) $(1)/etc/nodewatcher.d
+	$(INSTALL_DATA) ./files/telemetry.sh $(1)/etc/nodewatcher.d/telemetry.sh
 endef
 
 $(eval $(call BuildPackage,telemetryd))
