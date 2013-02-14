@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/readsensor
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=
+  DEPENDS:=+librt
   TITLE:=Sensor gateway communicator
 endef
 
