@@ -1,0 +1,17 @@
+#!/bin/sh
+
+. /lib/functions.sh
+
+use_server()
+{
+  local hostname
+  local port
+  config_get hostname $1 hostname
+  config_get port $1 port
+
+  /usr/sbin/ntpclient -q 0 -s -h ${hostname} &
+}
+
+config_load ntpclient
+config_foreach use_server ntpserver
+

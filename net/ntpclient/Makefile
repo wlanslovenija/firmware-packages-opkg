@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ntpclient
 PKG_VERSION:=2007_365
-PKG_RELEASE:=3
+PKG_RELEASE:=4
 
 PKG_SOURCE:=$(PKG_NAME)_$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://doolittle.icarus.com/ntpclient/
@@ -24,7 +24,7 @@ define Package/ntpclient
   SUBMENU:=Time Synchronization
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+librt
+  DEPENDS:=+librt +cronscripts
   TITLE:=NTP (Network Time Protocol) client
   URL:=http://doolittle.icarus.com/ntpclient/
 endef
@@ -41,6 +41,8 @@ define Package/ntpclient/install
 	$(INSTALL_DATA) ./files/ntpclient.hotplug $(1)/etc/hotplug.d/iface/20-ntpclient
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_CONF) ./files/ntpclient.config $(1)/etc/config/ntpclient
+	$(INSTALL_DIR) $(1)/etc/crontabs/run.10
+	$(INSTALL_BIN) ./files/ntpclient.cron $(1)/etc/crontabs/run.10/10-ntpclient
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/ntpclient $(1)/usr/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/adjtimex $(1)/usr/sbin/
