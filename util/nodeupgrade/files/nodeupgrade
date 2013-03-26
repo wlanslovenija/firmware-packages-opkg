@@ -63,7 +63,7 @@ WARNING: It is expected that watchdog can be disabled by TERM signal. If this is
 EOF
 }
 
-. /etc/functions.sh
+. /lib/functions.sh
 include /lib/upgrade
 
 image_type() {

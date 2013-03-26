@@ -1,7 +1,7 @@
 #
 # Nodewatcher functions library
 #
-. /etc/functions.sh
+. /lib/functions.sh
 
 get_client_subnets()
 {

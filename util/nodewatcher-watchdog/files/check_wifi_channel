@@ -4,7 +4,7 @@ if [ ! -x /sbin/wlc ]; then
   exit
 fi
 
-. $IPKG_INSTROOT/etc/functions.sh
+. $IPKG_INSTROOT/lib/functions.sh
 
 # Get channel that should be set
 config_load wireless
