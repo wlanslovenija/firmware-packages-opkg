@@ -10,24 +10,20 @@ MODULE_SERIAL=1
 
 # Configuration
 SENSOR_MEASURE_CACHE="/var/nodewatcher.simpleserial_measure"
-SENSOR_COUNT=6
-SENSOR_TIMEOUT=10
+SENSOR_TIMEOUT=100
 SENSOR_NAMES="\
-Voltage-(V) \
-Current-(mA) \
 Pressure-(kPa) \
 Temperature-(C) \
-Humidity-(%) \
-DewPoint-(C) \
+Temperature-1W-(C) \
 "
-SENSOR_START_ID=0
+SENSOR_START_ID=1
 
 #
 # Function that performs the actual measurements.
 #
 simpleserial_measure_stats()
 {
-  local sensor_id=$SENSOR_START_ID
+  local sensor_id=`expr $SENSOR_START_ID - 1`
   
   for file in "/dev/ttyATH0"; do
     if [ -c "$file" ]; then
@@ -38,7 +34,7 @@ simpleserial_measure_stats()
         sensor_id=`expr $sensor_id + 1`
         
         # Read sensor value via simple HTTP-like protocol
-        sensor_value=`/usr/bin/readsensor -i $sensor_id -d $file 2>/dev/null`
+        sensor_value=`/usr/bin/readsensor -i $sensor_id -d $file -t $SENSOR_TIMEOUT 2>/dev/null`
         
         # Return sensor readings
         if [ -n "$sensor_value" ]; then
@@ -57,6 +53,9 @@ report()
 {
   if [ -f "$SENSOR_MEASURE_CACHE" ]; then
     cat "$SENSOR_MEASURE_CACHE"
+  else
+    # Run data collection in the background
+    handle_simpleserial_measure &
   fi
 }
 
