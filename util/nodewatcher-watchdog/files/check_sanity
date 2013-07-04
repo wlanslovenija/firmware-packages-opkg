@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "`ps ax | grep olsrd | grep -v grep`" == "" ]; then
+if [ "`ps | grep olsrd | grep -v grep`" == "" ]; then
   # Olsrd failure detected, reboot the node if up more than 300 seconds
   UPTIME=`cat /proc/uptime | awk '{ printf("%d\n", $1); }'`
   
