@@ -2,7 +2,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nodewatcher-watchdog
 PKG_VERSION:=0.1
-PKG_RELEASE:=2
+PKG_RELEASE:=3
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -28,6 +28,7 @@ define Package/nodewatcher-watchdog/install
 	$(INSTALL_BIN) ./files/check_sanity $(1)/etc/crontabs/run.5/00-check_sanity
 	$(INSTALL_BIN) ./files/check_wifi_channel $(1)/etc/crontabs/run.5/01-check_wifi_channel
 	$(INSTALL_BIN) ./files/check_dns $(1)/etc/crontabs/run.5/02-check_dns
+	$(INSTALL_BIN) ./files/check_ath9k_freeze $(1)/etc/crontabs/run.5/01-check_ath9k_freeze
 
 	# Modules
 	$(INSTALL_DIR) $(1)/etc/nodewatcher.d
