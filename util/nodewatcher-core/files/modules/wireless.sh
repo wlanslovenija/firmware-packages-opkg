@@ -5,7 +5,7 @@
 
 # Module metadata
 MODULE_ID="core.wireless"
-MODULE_SERIAL=1
+MODULE_SERIAL=2
 
 #
 # Helper function for displaying wifi-related entries; uses the
@@ -31,6 +31,40 @@ show_wifi_entry()
 # Reports data for a specific wireless interface
 #
 show_interface()
+{
+  local iface="$1"
+  iface_name="$2"
+  local iwace_data="`iw dev ${iface} info 2>/dev/null`"
+  local iface_data="`ip link show ${iface} 2>/dev/null`"
+  
+  # Skip non-ethernet interfaces as they have no useful stuff to report
+  local iface_mac="`echo ${iface_data} | grep -Eo 'link/ether ..:..:..:..:..:..' | cut -d ' ' -f 2`"
+  if [[ "${iface_mac}" == "" ]]; then
+    return
+  fi
+  
+  # Display interface information
+  show_wifi_entry "mac" "${iface_mac}"
+  show_wifi_entry "phy" "phy`echo "${iwace_data}" | grep -Eo 'wiphy [0-9]+' | cut -d ' ' -f 2`"
+
+  local iface_mode="`echo "${iwace_data}" | grep -Eo 'type [A-Za-z-]+' | cut -d ' ' -f 2 | tr '[A-Z]' '[a-z]'`"
+  show_wifi_entry "mode" "${iface_mode}"
+  if [[ "${iface_mode}" == "ibss" ]]; then
+    local iwace_link="`iw dev ${iface} link 2>/dev/null`"
+    show_wifi_entry "bssid" "`echo "${iwace_link}" | grep -Eo 'IBSS ..:..:..:..:..:..' | cut -d ' ' -f 2`"
+  fi
+
+  show_wifi_entry "essid" "`echo "${iwace_data}" | grep -Eo 'ssid .+' | cut -d ' ' -f 2-`"
+  show_wifi_entry "channel" "`echo "${iwace_data}" | grep -Eo 'channel [0-9]+ ' | cut -d ' ' -f 2`"
+  show_wifi_entry "frequency" "`echo "${iwace_data}" | grep -Eo 'channel [0-9]+ \([0-9]+ MHz' | cut -d ' ' -f 3 | tr -d '('`"
+  
+  # TODO: Report signal and noise levels
+  show_wifi_entry "signal" "0"
+  show_wifi_entry "noise" "0"
+}
+
+# TODO: Remove legacy support when monitor is migrated
+legacy_show_interface()
 {
   local iface="$1"
   iface_name="$2"
@@ -88,7 +122,7 @@ report()
   # For backward compatibility include old format output as well
   # TODO remove this when monitor is updated and bump MODULE_SERIAL
   local wifi_iface="`iwconfig 2>/dev/null | grep ESSID | awk '{ print $1 }' | head -n 1`"
-  show_interface "${wifi_iface}" ""
+  legacy_show_interface "${wifi_iface}" ""
   show_entry_from_file "wifi.errors" /tmp/wifi_errors_counter "0"
 }
 

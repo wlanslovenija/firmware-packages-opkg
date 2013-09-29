@@ -1,10 +1,10 @@
 #
 # nodewatcher module
-# INTERFACE TRAFFIC STATISTICS
+# NETWORK INTERFACES
 #
 
 # Module metadata
-MODULE_ID="core.traffic"
+MODULE_ID="core.interfaces"
 MODULE_SERIAL=1
 
 #
@@ -23,11 +23,13 @@ report()
     # Check interface metadata
     local iface_meta="$(ip link show ${iface})"
     local iface_mac="`echo $iface_meta | grep -Eo 'link/ether ..:..:..:..:..:..' | cut -d ' ' -f 2`"
+    local iface_mtu="`echo $iface_meta | grep -Eo 'mtu [0-9]+' | cut -d ' ' -f 2`"
     
     # Skip all non-ethernet interfaces
     if [[ "$iface_mac" != "" ]]; then
       convert_to_key iface
       show_entry "iface.${iface}.mac" $iface_mac
+      show_entry "iface.${iface}.mtu" $iface_mtu
       show_entry "iface.${iface}.down" $rcv
       show_entry "iface.${iface}.up" $xmt
     fi
