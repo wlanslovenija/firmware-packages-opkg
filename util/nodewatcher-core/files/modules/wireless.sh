@@ -56,7 +56,13 @@ show_interface()
 
   show_wifi_entry "essid" "`echo "${iwace_data}" | grep -Eo 'ssid .+' | cut -d ' ' -f 2-`"
   show_wifi_entry "channel" "`echo "${iwace_data}" | grep -Eo 'channel [0-9]+ ' | cut -d ' ' -f 2`"
+  show_wifi_entry "channel_width" "`echo "${iwace_data}" | grep -Eo 'width: [0-9]+ MHz' | cut -d ' ' -f 2`"
   show_wifi_entry "frequency" "`echo "${iwace_data}" | grep -Eo 'channel [0-9]+ \([0-9]+ MHz' | cut -d ' ' -f 3 | tr -d '('`"
+
+  # TODO: Report bitrate, rts/fragmentation thresholds
+  show_wifi_entry "bitrate" "0"
+  show_wifi_entry "rts_threshold" "0"
+  show_wifi_entry "frag_threshold" "0"
   
   # TODO: Report signal and noise levels
   show_wifi_entry "signal" "0"
