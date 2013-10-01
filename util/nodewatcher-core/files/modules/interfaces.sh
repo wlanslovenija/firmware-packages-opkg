@@ -12,7 +12,7 @@ MODULE_SERIAL=2
 #
 report()
 {
-  IFACES=`cat /proc/net/dev | awk -F: '!/\|/ { gsub(/[[:space:]]*/, "", $1); split($2, a, " "); printf("%s=%s=%s=%s=%s ", $1, a[1], a[9], a[2], a[10]) }'`
+  IFACES=`cat /proc/net/dev | awk -F: '!/\|/ { gsub(/[[:space:]]*/, "", $1); split($2, a, " "); printf("%s=%s=%s=%s=%s=%s=%s=%s=%s ", $1, a[1], a[9], a[2], a[10], a[3], a[11], a[4], a[12]) }'`
   
   # Output entries for each interface
   for entry in $IFACES; do
@@ -21,6 +21,10 @@ report()
     tx_bytes=`echo $entry | cut -d '=' -f 3`
     rx_packets=`echo $entry | cut -d '=' -f 4`
     tx_packets=`echo $entry | cut -d '=' -f 5`
+    rx_errs=`echo $entry | cut -d '=' -f 6`
+    tx_errs=`echo $entry | cut -d '=' -f 7`
+    rx_drops=`echo $entry | cut -d '=' -f 8`
+    tx_drops=`echo $entry | cut -d '=' -f 9`
     
     # Check interface metadata
     local iface_meta="$(ip link show ${iface})"
@@ -36,6 +40,10 @@ report()
       show_entry "iface.${iface}.rx_bytes" $rx_bytes
       show_entry "iface.${iface}.tx_packets" $tx_packets
       show_entry "iface.${iface}.rx_packets" $rx_packets
+      show_entry "iface.${iface}.tx_errs" $tx_errs
+      show_entry "iface.${iface}.rx_errs" $rx_errs
+      show_entry "iface.${iface}.tx_drops" $tx_drops
+      show_entry "iface.${iface}.rx_drops" $rx_drops
 
       # TODO: Remove these legacy entries when monitor is migrated
       show_entry "iface.${iface}.down" $rx_bytes
