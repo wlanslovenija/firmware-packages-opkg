@@ -2,7 +2,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nodewatcher-core
 PKG_VERSION:=0.4
-PKG_RELEASE:=6
+PKG_RELEASE:=7
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -41,6 +41,7 @@ define Package/nodewatcher-core/install
 	$(INSTALL_DATA) ./files/modules/general.sh $(1)/etc/nodewatcher.d/general.sh
 	$(INSTALL_DATA) ./files/modules/wireless.sh $(1)/etc/nodewatcher.d/wireless.sh
 	$(INSTALL_DATA) ./files/modules/interfaces.sh $(1)/etc/nodewatcher.d/interfaces.sh
+	$(INSTALL_DATA) ./files/modules/keys.sh $(1)/etc/nodewatcher.d/keys.sh
 endef
 
 $(eval $(call BuildPackage,nodewatcher-core))
