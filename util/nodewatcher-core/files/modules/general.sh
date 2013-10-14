@@ -39,5 +39,31 @@ report()
   show_entry "general.routes.ipv6" "`ip -6 ro sh table all | wc -l`"
   show_entry "general.connections.tcp" "`cat /proc/net/tcp /proc/net/tcp6 | wc -l`"
   show_entry "general.connections.udp" "`cat /proc/net/udp /proc/net/udp6 | wc -l`"
+
+  # Detailed process counts by state
+  local running=0
+  local sleeping=0
+  local blocked=0
+  local zombie=0
+  local stopped=0
+  local paging=0
+  for state in $(cat /proc/*/stat 2>/dev/null | cut -d ')' -f 2 | cut -d ' ' -f 2); do
+    case "$state" in
+      R) let running++ ;;
+      S) let sleeping++ ;;
+      D) let blocked++ ;;
+      Z) let zombie++ ;;
+      T) let stopped++ ;;
+      W) let paging++ ;;
+      *) ;;
+    esac
+  done
+
+  show_entry "general.procs.running" "$running"
+  show_entry "general.procs.sleeping" "$sleeping"
+  show_entry "general.procs.blocked" "$blocked"
+  show_entry "general.procs.zombie" "$zombie"
+  show_entry "general.procs.stopped" "$stopped"
+  show_entry "general.procs.paging" "$paging"
 }
 
