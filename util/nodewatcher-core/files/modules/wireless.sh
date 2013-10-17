@@ -67,6 +67,9 @@ show_interface()
   # TODO: Report signal and noise levels
   show_wifi_entry "signal" "0"
   show_wifi_entry "noise" "0"
+
+  # Report survey results for this interface
+  iw dev ${iface} survey dump | awk -f /lib/nodewatcher/iw_survey.awk -v "iface=${iface}"
 }
 
 # TODO: Remove legacy support when monitor is migrated
@@ -129,7 +132,7 @@ report()
   done
   show_entry_from_file "wireless.errors" /tmp/wifi_errors_counter "0"
 
-  # Output the wireless survey
+  # Output the scan results
   if [[ "$first_radio" != "" ]]; then
     iw dev ${first_radio} scan | awk -f /lib/nodewatcher/iw_scan.awk
   fi
