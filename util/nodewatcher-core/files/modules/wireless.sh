@@ -119,12 +119,21 @@ legacy_show_interface()
 #
 report()
 {
+  local first_radio=""
   local radios=$(cat /proc/net/wireless | grep ':' | awk '{ print $1 }' | cut -d ':' -f 1)
   for radio in $radios; do
+    if [[ "$first_radio" == "" ]]; then
+      first_radio="$radio"
+    fi
     show_interface "${radio}" "${radio}"
   done
   show_entry_from_file "wireless.errors" /tmp/wifi_errors_counter "0"
-  
+
+  # Output the wireless survey
+  if [[ "$first_radio" != "" ]]; then
+    iw dev ${first_radio} scan | awk -f /lib/nodewatcher/iw_survey.awk
+  fi
+
   # For backward compatibility include old format output as well
   # TODO remove this when monitor is updated and bump MODULE_SERIAL
   local wifi_iface="`iwconfig 2>/dev/null | grep ESSID | awk '{ print $1 }' | head -n 1`"

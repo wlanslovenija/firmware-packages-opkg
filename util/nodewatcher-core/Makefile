@@ -2,7 +2,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nodewatcher-core
 PKG_VERSION:=0.4
-PKG_RELEASE:=7
+PKG_RELEASE:=8
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -35,6 +35,7 @@ define Package/nodewatcher-core/install
 	# Common functions
 	$(INSTALL_DIR) $(1)/lib/nodewatcher
 	$(INSTALL_DATA) ./files/nodewatcher_common.sh $(1)/lib/nodewatcher/common.sh
+	$(INSTALL_DATA) ./files/iw_survey.awk $(1)/lib/nodewatcher/iw_survey.awk
 	
 	# Modules
 	$(INSTALL_DIR) $(1)/etc/nodewatcher.d
