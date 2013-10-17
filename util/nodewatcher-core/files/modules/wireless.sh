@@ -131,7 +131,7 @@ report()
 
   # Output the wireless survey
   if [[ "$first_radio" != "" ]]; then
-    iw dev ${first_radio} scan | awk -f /lib/nodewatcher/iw_survey.awk
+    iw dev ${first_radio} scan | awk -f /lib/nodewatcher/iw_scan.awk
   fi
 
   # For backward compatibility include old format output as well
