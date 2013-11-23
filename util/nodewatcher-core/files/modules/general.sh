@@ -36,7 +36,11 @@ report()
 
   # Network resource usage
   show_entry "general.routes.ipv4" "`ip -4 ro sh table all | wc -l`"
-  show_entry "general.routes.ipv6" "`ip -6 ro sh table all | wc -l`"
+  if [[ -f /proc/net/if_inet6 ]]; then
+    show_entry "general.routes.ipv6" "`ip -6 ro sh table all | wc -l`"
+  else
+    show_entry "general.routes.ipv6" "0"
+  fi
   show_entry "general.connections.tcp" "`cat /proc/net/tcp /proc/net/tcp6 | wc -l`"
   show_entry "general.connections.udp" "`cat /proc/net/udp /proc/net/udp6 | wc -l`"
 
