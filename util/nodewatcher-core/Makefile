@@ -36,7 +36,6 @@ define Package/nodewatcher-core/install
 	$(INSTALL_DIR) $(1)/lib/nodewatcher
 	$(INSTALL_DATA) ./files/nodewatcher_common.sh $(1)/lib/nodewatcher/common.sh
 	$(INSTALL_DATA) ./files/iw_scan.awk $(1)/lib/nodewatcher/iw_scan.awk
-	$(INSTALL_DATA) ./files/iw_survey.awk $(1)/lib/nodewatcher/iw_survey.awk
 	
 	# Modules
 	$(INSTALL_DIR) $(1)/etc/nodewatcher.d

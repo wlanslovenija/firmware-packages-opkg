@@ -27,21 +27,6 @@ show_wifi_entry()
   show_entry "${prefix}.${key}" "${value}" 
 }
 
-#
-# Reports data for a specific wireless interface
-#
-show_interface()
-{
-  local iface="$1"
-  iface_name="$2"
-  
-  # Display interface information
-  /usr/bin/wireless-info ${iface}
-
-  # Report survey results for this interface
-  iw dev ${iface} survey dump | awk -f /lib/nodewatcher/iw_survey.awk -v "iface=${iface}"
-}
-
 # TODO: Remove legacy support when monitor is migrated
 legacy_show_interface()
 {
@@ -98,7 +83,8 @@ report()
     if [[ "$first_radio" == "" ]]; then
       first_radio="$radio"
     fi
-    show_interface "${radio}" "${radio}"
+    
+    /usr/bin/wireless-info ${radio}
   done
   show_entry_from_file "wireless.errors" /tmp/wifi_errors_counter "0"
 
