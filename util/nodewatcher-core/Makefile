@@ -1,15 +1,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nodewatcher-core
-PKG_VERSION:=0.4
-PKG_RELEASE:=8
+PKG_VERSION:=0.5
+PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/nodewatcher-core
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+busybox +cronscripts +tc +ip
+  DEPENDS:=+busybox +cronscripts +tc +ip +wireless-info
   TITLE:=nodewatcher-core
 endef
 
