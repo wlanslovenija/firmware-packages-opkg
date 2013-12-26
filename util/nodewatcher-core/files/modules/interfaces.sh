@@ -51,8 +51,8 @@ report()
       for addr in $iface_addr; do
         local family="$(echo $addr | cut -d '=' -f 1)"
         local addr="$(echo $addr | cut -d '=' -f 2)"
-        show_entry "iface.${iface}.net${d}.family" $family
-        show_entry "iface.${iface}.net${d}.addr" $addr
+        show_entry "iface.${iface}.network.net${d}.family" $family
+        show_entry "iface.${iface}.network.net${d}.addr" $addr
         let d++
       done
 
