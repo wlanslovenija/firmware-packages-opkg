@@ -45,6 +45,17 @@ report()
       show_entry "iface.${iface}.tx_drops" $tx_drops
       show_entry "iface.${iface}.rx_drops" $rx_drops
 
+      # Report network addresses
+      local iface_addr="`ip addr show ${iface} | grep -Eo 'inet.? .+/[0-9]+' | tr ' \n' '= '`"
+      d=0
+      for addr in $iface_addr; do
+        local family="$(echo $addr | cut -d '=' -f 1)"
+        local addr="$(echo $addr | cut -d '=' -f 2)"
+        show_entry "iface.${iface}.net${d}.family" $family
+        show_entry "iface.${iface}.net${d}.addr" $addr
+        let d++
+      done
+
       # TODO: Remove these legacy entries when monitor is migrated
       show_entry "iface.${iface}.down" $rx_bytes
       show_entry "iface.${iface}.up" $tx_bytes
