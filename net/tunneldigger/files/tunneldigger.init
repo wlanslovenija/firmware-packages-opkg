@@ -5,27 +5,43 @@ START=90
 PIDPATH=/var/run
 tunnel_id=1
 
+missing() {
+	echo "Not starting tunneldigger - missing $1" >&2
+}
+
 config_cb() {
 	local cfg="$CONFIG_SECTION"
 	config_get configname "$cfg" TYPE
 	case "$configname" in
 		broker)
+			config_get_bool enabled "$cfg" enabled 1
 			config_get addresses "$cfg" address
 			config_get uuid "$cfg" uuid
 			config_get interface "$cfg" interface
 			config_get limit_bw_down "$cfg" limit_bw_down
 			config_get hook_script "$cfg" hook_script
 			
+			[ $enabled -eq 0 ] && return
+
 			local broker_opts=""
 			for address in $addresses; do
-			  broker_opts="${broker_opts} -b ${address}"
+			  append broker_opts "-b ${address}"
 			done
 
-			if [ ! -z "${limit_bw_down}" ]; then
-				broker_opts="${broker_opts} -L ${limit_bw_down}"
+			[ ! -z "${limit_bw_down}" ] && append broker_opts "-L ${limit_bw_down}"
+			[ ! -z "${hook_script}" ] && append broker_opts "-s ${hook_script}"
+
+			if [ -z "$uuid" ]; then
+				missing uuid
+				return
+			elif [ -z "$interface" ]; then
+				missing interface
+				return
 			fi
+
 			echo "Starting tunneldigger on ${interface}"
-			/sbin/start-stop-daemon -S -q -b -m -p ${PIDPATH}/tunneldigger.${interface}.pid -x /usr/bin/tunneldigger -- -u ${uuid} -i ${interface} -t ${tunnel_id} -s ${hook_script} ${broker_opts}
+			/sbin/start-stop-daemon -S -q -b -m -p ${PIDPATH}/tunneldigger.${interface}.pid -x /usr/bin/tunneldigger -- -u ${uuid} -i ${interface} -t ${tunnel_id} ${broker_opts}
+
 			let tunnel_id++
 		;;
 	esac
@@ -36,17 +52,17 @@ start() {
 }
 
 stop() {
-  for PIDFILE in `find ${PIDPATH}/ -name "tunneldigger\.*\.pid"`; do
-		PID=`cat ${PIDFILE}`
-    IFACE=`echo ${PIDFILE} | awk -F\/tunneldigger '{print $2}' | cut -d'.' -f2`
-    echo "Stopping tunneldigger for interface ${IFACE}"
+	for PIDFILE in `find ${PIDPATH}/ -name "tunneldigger\.*\.pid"`; do
+		PID="$(cat ${PIDFILE})"
+		IFACE="$(echo ${PIDFILE} | awk -F\/tunneldigger '{print $2}' | cut -d'.' -f2)"
+		echo "Stopping tunneldigger for interface ${IFACE}"
 		start-stop-daemon -K -q -p $PIDFILE 
 		while test -d "/proc/${PID}"; do
 			echo "  waiting for tunneldigger to stop"
 			sleep 1
 		done
 		echo "  tunneldigger stopped"
-  done
+	done
 }
 
 restart() {
