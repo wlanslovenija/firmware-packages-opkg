@@ -26,6 +26,8 @@ define Package/mspdebug
   DEPENDS:=+libusb +libpthread +libncurses +libreadline
 endef
 
+TARGET_LDFLAGS += -lncurses
+
 define Package/mspdebug/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/mspdebug $(1)/usr/bin/mspdebug
