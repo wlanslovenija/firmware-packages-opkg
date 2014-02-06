@@ -23,7 +23,7 @@ define Package/mspdebug
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=Debugger for use with MSP430 MCUs
-  DEPENDS:=+libusb +libpthread +libreadline
+  DEPENDS:=+libusb +libpthread +libncurses +libreadline
 endef
 
 define Package/mspdebug/install
