@@ -17,9 +17,7 @@ PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=a5ae94cab7c91f70e74eaba9d343983523d4554f
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/gevent-$(PKG_VERSION)
-PKG_BUILD_DEPENDS:=python
+PKG_BUILD_DEPENDS:=python cython
 
 include $(INCLUDE_DIR)/package.mk
 $(call include_mk, python-package.mk)
