@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=python-gevent
-PKG_VERSION:=0.13.8
+PKG_VERSION:=1.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/SiteSupport/gevent.git
+PKG_SOURCE_URL:=https://github.com/surfly/gevent.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=454a77ca561868854760b2d9cbfa3bf3bbd2e062
+PKG_SOURCE_VERSION:=a5ae94cab7c91f70e74eaba9d343983523d4554f
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 
 
