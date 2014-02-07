@@ -50,7 +50,9 @@ define Build/Compile
                         --without-libintl-prefix \
                         --disable-nls \
 	);
-	$(call Build/Compile/PyMod,,install --prefix="$(PKG_INSTALL_DIR)/usr")
+	$(call Build/Compile/PyMod,,install --prefix="$(PKG_INSTALL_DIR)/usr", \
+		CYTHON="$(STAGING_DIR_HOST)/usr/bin/cython" \
+	)
 endef
 
 define Package/python-gevent/install

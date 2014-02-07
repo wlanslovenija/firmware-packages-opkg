@@ -8,15 +8,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cython
-PKG_VERSION:=0.10.3
+PKG_VERSION:=0.19
 PKG_RELEASE:=1
 
 PKG_SOURCE:=Cython-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=http://www.cython.org/
+PKG_SOURCE_URL:=http://www.cython.org/release/
 PKG_BUILD_DIR:=$(BUILD_DIR)/Cython-$(PKG_VERSION)
-PKG_MD5SUM:=684103ed37472d9beef3a38e0d5c431d
+PKG_MD5SUM:=76989337dee4cf7afdcb5cde514423f8
 
-PKG_BUILD_DEPENDS:=python
+PKG_BUILD_DEPENDS:=python cython/host
+HOST_BUILD_DEPENDS:=python
 
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/Cython-$(PKG_VERSION)
 
@@ -67,6 +68,9 @@ endef
 
 define Host/Compile
 	$(call Host/Compile/PyMod,,install --no-cython-compile --prefix="$(STAGING_DIR_HOST)/usr")
+endef
+
+define Host/Install
 endef
 
 $(eval $(call HostBuild))
