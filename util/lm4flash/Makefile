@@ -23,12 +23,13 @@ define Package/lm4flash
   SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=lm4flash
-  DEPENDS:=+libusb
+  DEPENDS:=+libusb-1.0
+  MAKE_PATH:=lm4flash
 endef
 
 define Package/lm4flash/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lm4flash $(1)/usr/bin/lm4flash
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lm4flash/lm4flash $(1)/usr/bin/lm4flash
 endef
 
 $(eval $(call BuildPackage,lm4flash))
