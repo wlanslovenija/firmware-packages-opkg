@@ -27,6 +27,11 @@ define Package/lm4flash
   MAKE_PATH:=lm4flash
 endef
 
+define Build/Prepare
+	$(call Build/Prepare/Default)
+	sed -i s/gcc/\$$$$\(CC\)/g $(PKG_BUILD_DIR)/lm4flash/Makefile
+endef
+
 define Package/lm4flash/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/lm4flash/lm4flash $(1)/usr/bin/lm4flash
