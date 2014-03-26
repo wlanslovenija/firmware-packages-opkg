@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=koruza-controller
-PKG_VERSION:=0.1
+PKG_VERSION:=0.2
 PKG_RELEASE:=1
 PKG_REV:=HEAD
 
@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/koruza-controller
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+librt
+  DEPENDS:=+librt +libevent2
   TITLE:=Simple KORUZA controller
 endef
 
