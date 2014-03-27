@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/koruza-controller
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+librt +libevent2
+  DEPENDS:=+librt +libevent2 +zlib
   TITLE:=Simple KORUZA controller
 endef
 
