@@ -1,0 +1,32 @@
+#!/bin/sh /etc/rc.common
+
+START=91
+
+PIDFILE=/var/run/koruza-collector.pid
+CONFIG_FILE=/etc/koruza.cfg
+
+start() {
+	if [ ! -f ${CONFIG_FILE} ]; then
+		echo "Not starting KORUZA collector as config file is missing."
+		exit 1
+	fi
+
+	echo "Starting KORUZA collector"
+	/sbin/start-stop-daemon -S -q -b -m -p ${PIDFILE} -x /usr/bin/koruza-control -c ${CONFIG_FILE} -l
+}
+
+stop() {
+	echo "Stopping KORUZA collector"
+	PID="$(cat ${PIDFILE})"
+	/sbin/start-stop-daemon -K -q -p ${PIDFILE}
+	echo "  waiting for daemon to stop"
+	while test -d "/proc/${PID}"; do
+		sleep 1
+	done
+}
+
+restart() {
+	stop
+	start
+}
+

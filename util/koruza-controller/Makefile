@@ -23,6 +23,11 @@ endef
 define Package/koruza-controller/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/koruza-control $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/etc
+	$(INSTALL_DATA) ./files/koruza.cfg $(1)/etc/koruza.cfg
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/koruza-control-daemon.init $(1)/etc/init.d/koruza-control-daemon
+	$(INSTALL_BIN) ./files/koruza-collector.init $(1)/etc/init.d/koruza-collector
 endef
 
 $(eval $(call BuildPackage,koruza-controller))
