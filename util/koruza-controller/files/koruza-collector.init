@@ -12,7 +12,7 @@ start() {
 	fi
 
 	echo "Starting KORUZA collector"
-	/sbin/start-stop-daemon -S -q -b -m -p ${PIDFILE} -x /usr/bin/koruza-control -c ${CONFIG_FILE} -l
+	/sbin/start-stop-daemon -S -q -b -m -p ${PIDFILE} -x /usr/bin/koruza-control -- -c ${CONFIG_FILE} -l
 }
 
 stop() {
