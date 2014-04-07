@@ -17,6 +17,7 @@ PKG_SOURCE_URL:=https://github.com/python-greenlet/greenlet/archive/
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/greenlet-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python
+PKG_USE_MIPS16:=0
 
 include $(INCLUDE_DIR)/package.mk
 $(call include_mk, python-package.mk)
