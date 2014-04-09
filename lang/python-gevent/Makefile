@@ -18,6 +18,7 @@ PKG_SOURCE_VERSION:=a5ae94cab7c91f70e74eaba9d343983523d4554f
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 
 PKG_BUILD_DEPENDS:=python cython
+PKG_USE_MIPS16:=0
 
 include $(INCLUDE_DIR)/package.mk
 $(call include_mk, python-package.mk)
@@ -30,6 +31,8 @@ define Package/python-gevent
   URL:=http://www.gevent.org/
   DEPENDS:=+python +python-greenlet
 endef
+
+TARGET_CFLAGS += -mno-mips16 -mno-interlink-mips16
 
 define Package/python-gevent/description
   gevent is a coroutine-based Python networking library.
