@@ -2,8 +2,8 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=koruza-controller
 PKG_VERSION:=0.3
-PKG_RELEASE:=1
-PKG_REV:=f161df15c3996b40c65ce1ff523821e95279a1cc
+PKG_RELEASE:=2
+PKG_REV:=aacb34a08eb11e4ac88008d68f062f0cfacbeab0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=git://github.com/IRNAS/koruza-controller.git
