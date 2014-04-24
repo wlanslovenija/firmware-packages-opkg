@@ -1,0 +1,12 @@
+#!/bin/sh
+
+COLLECTOR_FILE="/tmp/koruza-collector.csv.gz"
+
+echo "Content-Type: application/gzip"
+echo ""
+
+if [ -f ${COLLECTOR_FILE} ]; then
+  cat ${COLLECTOR_FILE}
+  echo -n > ${COLLECTOR_FILE}
+fi
+
