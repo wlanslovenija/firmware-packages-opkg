@@ -6,7 +6,7 @@ PKG_RELEASE:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/nodewatcher-simpleserial
+define Package/nodewatcher-koruza
   SECTION:=utils
   CATEGORY:=Utilities
   DEPENDS:=+nodewatcher-core +koruza-controller
@@ -22,7 +22,7 @@ endef
 define Build/Compile
 endef
 
-define Package/nodewatcher-simpleserial/install
+define Package/nodewatcher-koruza/install
 	# Modules
 	$(INSTALL_DIR) $(1)/etc/nodewatcher.d
 	$(INSTALL_DATA) ./files/koruza.sh $(1)/etc/nodewatcher.d/koruza.sh
