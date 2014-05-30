@@ -53,6 +53,7 @@ define Package/nodewatcher-agent/install
 	$(INSTALL_CONF) ./files/nodewatcher-agent.config $(1)/etc/config/nodewatcher
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
 	$(INSTALL_CONF) ./files/rpcd-acl.json $(1)/usr/share/rpcd/acl.d/nodewatcher.json
+	$(INSTALL_DIR) $(1)/www/nodewatcher
 endef
 
 
