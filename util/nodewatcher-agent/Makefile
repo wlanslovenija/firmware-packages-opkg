@@ -51,6 +51,8 @@ define Package/nodewatcher-agent/install
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libnodewatcher-agent-common.so $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_CONF) ./files/nodewatcher-agent.config $(1)/etc/config/nodewatcher
+	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
+	$(INSTALL_CONF) ./files/rpcd-acl.json $(1)/usr/share/rpcd/acl.d/nodewatcher.json
 endef
 
 
