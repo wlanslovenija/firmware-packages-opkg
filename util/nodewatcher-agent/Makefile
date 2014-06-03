@@ -1,13 +1,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nodewatcher-agent
-PKG_VERSION:=2014-06-02
+PKG_VERSION:=2014-06-03
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/wlanslovenija/nodewatcher-agent.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE_VERSION:=265a1a2c510ab1ec62341a23efb40eeab68a4fa6
+PKG_SOURCE_VERSION:=eaafc313ef540400ec7d4041bb0f9a9f613e4aad
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Jernej Kos <jernej@kos.mx>
 
@@ -88,3 +88,5 @@ $(eval $(call BuildModule,general,,Provides general system info.))
 $(eval $(call BuildModule,resources,,Provides system resource usage info.))
 $(eval $(call BuildModule,interfaces,netifd,Provides network interface info.))
 $(eval $(call BuildModule,wireless,libiwinfo,Provides wireless interface info.))
+$(eval $(call BuildModule,keys_ssh,,Provides SSH key info.))
+
