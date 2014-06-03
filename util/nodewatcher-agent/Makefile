@@ -7,7 +7,7 @@ PKG_RELEASE=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/wlanslovenija/nodewatcher-agent.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE_VERSION:=eaafc313ef540400ec7d4041bb0f9a9f613e4aad
+PKG_SOURCE_VERSION:=9ff29370b31e91ed650356fdf20862c74ced3d03
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Jernej Kos <jernej@kos.mx>
 
@@ -89,4 +89,5 @@ $(eval $(call BuildModule,resources,,Provides system resource usage info.))
 $(eval $(call BuildModule,interfaces,netifd,Provides network interface info.))
 $(eval $(call BuildModule,wireless,libiwinfo,Provides wireless interface info.))
 $(eval $(call BuildModule,keys_ssh,,Provides SSH key info.))
+$(eval $(call BuildModule,clients,,Provides client info.))
 
