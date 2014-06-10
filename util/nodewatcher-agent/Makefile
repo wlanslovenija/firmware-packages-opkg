@@ -1,13 +1,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nodewatcher-agent
-PKG_VERSION:=2014-06-09
+PKG_VERSION:=2014-06-10
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/wlanslovenija/nodewatcher-agent.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE_VERSION:=ecccdcd9fbe0a384e7d82eb8db523bb0f8f9353d
+PKG_SOURCE_VERSION:=cf78425063a43342f6e826ac105b512d8b19ce85
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Jernej Kos <jernej@kos.mx>
 
