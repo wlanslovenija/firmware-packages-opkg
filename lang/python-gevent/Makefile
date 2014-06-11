@@ -32,7 +32,11 @@ define Package/python-gevent
   DEPENDS:=+python +python-greenlet
 endef
 
+# This is required in addition to PKG_USE_MIPS16:=0 because otherwise MIPS16
+# flags are inherited from the Python base package (via sysconfig module)
+ifdef CONFIG_USE_MIPS16
 TARGET_CFLAGS += -mno-mips16 -mno-interlink-mips16
+endif
 
 define Package/python-gevent/description
   gevent is a coroutine-based Python networking library.
