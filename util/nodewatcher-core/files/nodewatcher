@@ -21,7 +21,10 @@ call_function_if_exists()
   
   if [ "`type $function 2>/dev/null`" == "$function is a shell function" ]; then
     $function $*
+    return 0
   fi
+
+  return 1
 }
 
 #
@@ -33,14 +36,14 @@ run_module()
   local mode="$2"
   . $module
   
-  # Extract serial number and output it
-  show_entry "META.modules.${MODULE_ID//./-}.serial" "${MODULE_SERIAL}"
-  
   # Call different functions depending on mode
   if [ "$mode" == "" ]; then
+    # Extract serial number and output it
+    show_entry "META.modules.${MODULE_ID//./-}.serial" "${MODULE_SERIAL}"
+
     call_function_if_exists report
   else
-    call_function_if_exists handle_$mode
+    call_function_if_exists handle_$mode && exit
   fi
 }
 
