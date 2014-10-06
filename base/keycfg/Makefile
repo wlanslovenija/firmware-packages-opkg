@@ -2,7 +2,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=keycfg
 PKG_VERSION:=0.1
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -23,7 +23,7 @@ endef
 define Build/Compile
 endef
 
-define Package/cronscripts/install
+define Package/keycfg/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/keycfg.init $(1)/etc/init.d/keycfg
 endef
