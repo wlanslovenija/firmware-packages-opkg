@@ -1,0 +1,40 @@
+#!/bin/sh /etc/rc.common
+START=10
+
+. $IPKG_INSTROOT/lib/functions/system.sh
+
+config_cb() {
+	local cfg="$CONFIG_SECTION"
+	config_get configname "$cfg" TYPE
+
+	local macaddr
+
+	case "$configname" in
+		mac)
+			config_get source "$cfg" source
+			config_get args "$cfg" args
+			config_get offset "$cfg" offset
+			case "$source" in
+				mtd-ascii) macaddr=$(mtd_get_mac_ascii ${args}) ;;
+				mtd-binary) macaddr=$(mtd_get_mac_binary ${args}) ;;
+				*)
+					echo "maccfg: Ignoring invalid source '${source}' for section '${cfg}'."
+					return
+					;;
+			esac
+			
+			if [ -n "${macaddr}" ]; then
+				if [ -n "${offset}" ]; then
+					macaddr=$(macaddr_add "$macaddr" ${offset})
+				fi
+
+				uci set network.${cfg}.macaddr=${macaddr} && uci commit 2>/dev/null
+			fi
+		;;
+	esac
+}
+
+start() {
+	config_load maccfg
+}
+
