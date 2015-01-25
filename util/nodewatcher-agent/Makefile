@@ -54,6 +54,8 @@ define Package/nodewatcher-agent/install
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
 	$(INSTALL_CONF) ./files/rpcd-acl.json $(1)/usr/share/rpcd/acl.d/nodewatcher.json
 	$(INSTALL_DIR) $(1)/www/nodewatcher
+	# add symbolic link to write json output feed to /tmp instead of overlayfs (since flash has limited erase cycles)
+	ln -s /tmp/nodewatcher_feed $(1)/www/nodewatcher/feed
 endef
 
 
