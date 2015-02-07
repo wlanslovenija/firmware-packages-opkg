@@ -1,13 +1,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=koruza-controller
-PKG_VERSION:=2015-01-07
+PKG_VERSION:=2015-02-07
 PKG_RELEASE:=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=git://github.com/IRNAS/koruza-controller.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=0496b143a374084a00d5e934279f19b8d4bd1d60
+PKG_SOURCE_VERSION:=70900bfd1dce7d1090398036a839471bb9cda9d8
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Jernej Kos <jernej@kos.mx>
 
@@ -32,6 +32,8 @@ define Package/koruza-controller/install
 	$(INSTALL_BIN) ./files/koruza-collector.init $(1)/etc/init.d/koruza-collector
 	$(INSTALL_DIR) $(1)/www/cgi-bin
 	$(INSTALL_BIN) ./files/koruza-collect $(1)/www/cgi-bin/koruza-collect
+	$(INSTALL_DIR) $(1)/www/koruza
+	ln -sf /tmp/koruza-collector.last_state $(1)/www/koruza/last_state
 endef
 
 $(eval $(call BuildPackage,koruza-controller))
