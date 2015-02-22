@@ -9,5 +9,5 @@ discuss the project, use `development mailing list`_.
 .. _development Trac: https://dev.wlan-si.net/
 .. _existing open tickets: https://dev.wlan-si.net/report
 .. _open a new one: https://dev.wlan-si.net/newticket
-.. _GitHub: https://github.com/wlanslovenija/firmware-core
+.. _GitHub: https://github.com/wlanslovenija/firmware-packages-opkg
 .. _development mailing list: https://wlan-si.net/lists/info/development
