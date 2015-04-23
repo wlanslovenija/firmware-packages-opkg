@@ -1,13 +1,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nodewatcher-agent
-PKG_VERSION:=2015-04-19
+PKG_VERSION:=2015-04-23
 PKG_RELEASE=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/wlanslovenija/nodewatcher-agent.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)
-PKG_SOURCE_VERSION:=a268e26da5bd0d570b29f50c959860a760961b7b
+PKG_SOURCE_VERSION:=0a6c8210efaf9271fc7f7e57cb4d8ea6587a66b3
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_MAINTAINER:=Jernej Kos <jernej@kos.mx>
 
@@ -54,8 +54,6 @@ define Package/nodewatcher-agent/install
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
 	$(INSTALL_CONF) ./files/rpcd-acl.json $(1)/usr/share/rpcd/acl.d/nodewatcher.json
 	$(INSTALL_DIR) $(1)/www/nodewatcher
-	# add symbolic link to write json output feed to /tmp instead of overlayfs (since flash has limited erase cycles)
-	ln -s /tmp/nodewatcher_feed $(1)/www/nodewatcher/feed
 endef
 
 
