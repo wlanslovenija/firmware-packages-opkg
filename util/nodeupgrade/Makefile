@@ -25,12 +25,6 @@ endef
 define Package/nodeupgrade/install
 	$(INSTALL_DIR) $(1)/sbin
 	$(INSTALL_BIN) ./files/nodeupgrade $(1)/sbin
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) ./files/timeout $(1)/usr/bin
-	$(INSTALL_DIR) $(1)/lib/upgrade
-	$(INSTALL_DATA) ./files/nodeupgrade.sh $(1)/lib/upgrade
-	$(INSTALL_DATA) ./files/base64.awk $(1)/lib/upgrade
-	$(INSTALL_DATA) ./files/hosts.awk $(1)/lib/upgrade
 endef
 
 $(eval $(call BuildPackage,nodeupgrade))
