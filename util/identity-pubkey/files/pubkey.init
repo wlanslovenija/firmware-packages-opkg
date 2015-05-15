@@ -12,6 +12,7 @@ start() {
 		mkdir -p $(dirname ${IDENTITY_CERTIFICATE_FILE})
 
 		/usr/sbin/px5g selfsigned \
+				-subj "/CN=$(uci get system.@system[0].hostname)" \
 				-days -1 \
 				-newkey rsa:2048 \
 				-keyout ${IDENTITY_KEY_FILE} \
