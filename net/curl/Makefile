@@ -9,13 +9,16 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=curl
 PKG_VERSION:=7.43.0
-PKG_RELEASE:=$(PKG_SOURCE_VERSION)
+PKG_RELEASE:=1
 
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/bagder/curl.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=c0700e3c7f36fc0bc969652c39cdd808de128d94
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE_URL:=http://curl.haxx.se/download/ \
+	http://www.mirrorspace.org/curl/ \
+	ftp://ftp.sunet.se/pub/www/utilities/curl/ \
+	ftp://ftp.planetmirror.com/pub/curl/ \
+	http://www.mirrormonster.com/curl/download/ \
+	http://curl.mirrors.cyberservers.net/download/
+PKG_MD5SUM:=11bddbb452a8b766b932f859aaeeed39
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=COPYING
