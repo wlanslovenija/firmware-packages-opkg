@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=koruza-controller
-PKG_VERSION:=2015-06-11
+PKG_VERSION:=2015-07-01
 PKG_RELEASE:=$(PKG_SOURCE_VERSION)
 
 PKG_SOURCE_PROTO:=git
@@ -40,6 +40,7 @@ define Package/koruza-controller/install
 	$(INSTALL_DIR) $(1)/www/koruza
 	ln -sf /tmp/koruza-collector.last_state $(1)/www/koruza/last_state
 	ln -sf /tmp/koruza-collector.last_state.json $(1)/www/koruza/last_state.json
+	cp -a ./files/frontend/* $(1)/www
 endef
 
 $(eval $(call BuildPackage,koruza-controller))
