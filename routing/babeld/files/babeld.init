@@ -146,6 +146,7 @@ babel_filter() {
 	append_ifname "$cfg" 'if' 'if'
 
 	append_parm "$cfg" 'action' ''
+	append_parm "$cfg" 'table' 'table'
 
 	cfg_append "$buffer"
 }
