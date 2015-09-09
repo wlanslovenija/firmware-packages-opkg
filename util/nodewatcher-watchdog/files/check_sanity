@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "`ps | grep olsrd | grep -v grep`" == "" ]; then
+if [[ -x /usr/sbin/olsrd && "`ps | grep olsrd | grep -v grep`" == "" ]]; then
   # Olsrd failure detected, reboot the node if up more than 300 seconds
   UPTIME=`cat /proc/uptime | awk '{ printf("%d\n", $1); }'`
   
@@ -8,4 +8,15 @@ if [ "`ps | grep olsrd | grep -v grep`" == "" ]; then
     logger "nodewatcher: OLSR is not running, rebooting"
     reboot
   fi
-fi 
+fi
+
+if [[ -x /usr/sbin/babeld && "`ps | grep babeld | grep -v grep`" == "" ]]; then
+  # Babeld failure detected, reboot the node if up more than 300 seconds
+  UPTIME=`cat /proc/uptime | awk '{ printf("%d\n", $1); }'`
+  
+  if [ $UPTIME -gt 300 ]; then
+    logger "nodewatcher: babeld is not running, rebooting"
+    reboot
+  fi
+fi
+
