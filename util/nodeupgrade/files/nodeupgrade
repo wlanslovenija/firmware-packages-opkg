@@ -36,6 +36,8 @@ else
   NODEUPGRADE_PRIVATE_KEY=$(uci get nodeupgrade.@nodeupgrade[0].private_key)
   NODEUPGRADE_SERVER_PUBLIC_KEY=$(uci get nodeupgrade.@nodeupgrade[0].server_public_key)
 
+  MY_NODE_UUID="$(uci get system.@system[0].uuid)"
+
   if [ -z "${NODEUPGRADE_SERVER}" ]; then
     echo "ERROR: Build result UUID passed as argument, but server not configured."
     exit 1
@@ -71,6 +73,19 @@ else
 
     json_select ..
   done
+  json_select ..
+
+  # Verify that the upgrade is for a correct node.
+  local node_uuid node_name
+  json_select node
+  json_get_var node_uuid uuid
+  json_get_var node_name name
+  if [ "${MY_NODE_UUID}" != "${node_uuid}" ]; then
+    echo "ERROR: This firmware is for node '${node_name}' (${node_uuid})."
+    echo "       You are trying to install on node with UUID '${MY_NODE_UUID}'."
+    exit 1
+  fi
+  json_select ..
 
   if [ -z "${selected_filename}" ]; then
     echo "ERROR: No suitable firmware images found."
