@@ -8,14 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=python-gevent
-PKG_VERSION:=1.0
+PKG_VERSION:=1.0.2
 PKG_RELEASE:=1
 
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/surfly/gevent.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=a5ae94cab7c91f70e74eaba9d343983523d4554f
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_SOURCE:=gevent-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://github.com/gevent/gevent/releases/download/v1.0.2/
+PKG_BUILD_DIR:=$(BUILD_DIR)/gevent-$(PKG_VERSION)
+PKG_MD5SUM:=117f135d57ca7416203fba3720bf71c1
 
 PKG_BUILD_DEPENDS:=python cython
 PKG_USE_MIPS16:=0
@@ -53,9 +52,6 @@ define Build/Compile
                         --host=$(GNU_TARGET_NAME) \
                         --build=$(GNU_HOST_NAME) \
                         --prefix=/usr \
-                        --without-libiconv-prefix \
-                        --without-libintl-prefix \
-                        --disable-nls \
 	);
 	$(call Build/Compile/PyMod,,install --prefix="$(PKG_INSTALL_DIR)/usr", \
 		CYTHON="$(STAGING_DIR_HOST)/usr/bin/cython" \

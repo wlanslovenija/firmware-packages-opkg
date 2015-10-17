@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cython
-PKG_VERSION:=0.19
+PKG_VERSION:=0.23.4
 PKG_RELEASE:=1
 
 PKG_SOURCE:=Cython-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=http://www.cython.org/release/
 PKG_BUILD_DIR:=$(BUILD_DIR)/Cython-$(PKG_VERSION)
-PKG_MD5SUM:=76989337dee4cf7afdcb5cde514423f8
+PKG_MD5SUM:=157df1f69bcec6b56fd97e0f2e057f6e
 
 PKG_BUILD_DEPENDS:=python cython/host
 HOST_BUILD_DEPENDS:=python
