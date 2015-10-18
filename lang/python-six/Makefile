@@ -7,30 +7,30 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=python-construct
-PKG_VERSION:=2.5.2
+PKG_NAME:=python-six
+PKG_VERSION:=1.10.0
 PKG_RELEASE:=1
 
-PKG_SOURCE:=construct-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://pypi.python.org/packages/source/c/construct/
-PKG_MD5SUM:=75fc5e311ee5624e63268067e4b0d97b
+PKG_SOURCE:=six-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://pypi.python.org/packages/source/s/six/
+PKG_MD5SUM:=34eed507548117b2ab523ab14b2f8b55
 
-PKG_BUILD_DIR:=$(BUILD_DIR)/construct-$(PKG_VERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/six-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=python
 
 include $(INCLUDE_DIR)/package.mk
 $(call include_mk, python-package.mk)
 
-define Package/python-construct
+define Package/python-six
   SUBMENU:=Python
   SECTION:=lang
   CATEGORY:=Languages
-  TITLE:=python-construct
-  DEPENDS:=+python +python-six
+  TITLE:=python-six
+  DEPENDS:=+python
 endef
 
-define Package/python-construct/description
-  A powerful declarative parser/builder for binary data
+define Package/python-six/description
+  Python 2 and 3 compatibility utilities
 endef
 
 define Build/Compile
@@ -40,11 +40,11 @@ define Build/Compile
 	)
 endef
 
-define Package/python-construct/install
+define Package/python-six/install
 	$(INSTALL_DIR) $(1)$(PYTHON_PKG_DIR)
 	$(CP) \
 	    $(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/* \
 	    $(1)$(PYTHON_PKG_DIR)
 endef
 
-$(eval $(call BuildPackage,python-construct))
+$(eval $(call BuildPackage,python-six))

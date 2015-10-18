@@ -1,0 +1,13 @@
+#!/bin/sh
+
+TUNNEL_ID="$1"
+INTERFACE="$3"
+MTU="$4"
+
+# Disable IPv6 on this interface as it will be bridged.
+echo 1 > /proc/sys/net/ipv6/conf/${INTERFACE}/disable_ipv6
+# Add the interface to the proper bridge and bring it up.
+ip link set dev ${INTERFACE} master tdin${MTU} mtu ${MTU} up
+# Ensure bridge MTU.
+ip link set dev tdin${MTU} mtu ${MTU}
+

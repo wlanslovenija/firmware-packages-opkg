@@ -53,7 +53,9 @@ define Build/Compile
                         --build=$(GNU_HOST_NAME) \
                         --prefix=/usr \
 	);
-	$(call Build/Compile/PyMod,,install --prefix="$(PKG_INSTALL_DIR)/usr", \
+	$(call Build/Compile/PyMod,,\
+		install --root="$(PKG_INSTALL_DIR)" --prefix="/usr" \
+		--single-version-externally-managed, \
 		CYTHON="$(STAGING_DIR_HOST)/usr/bin/cython" \
 	)
 endef

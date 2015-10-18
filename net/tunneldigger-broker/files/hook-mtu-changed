@@ -1,0 +1,17 @@
+#!/bin/sh
+
+TUNNEL_ID="$1"
+INTERFACE="$3"
+OLD_MTU="$4"
+NEW_MTU="$5"
+
+# Remove interface from old bridge.
+ip link set dev ${INTERFACE} nomaster
+ip link set dev tdin${OLD_MTU} mtu ${OLD_MTU}
+
+# Change interface bridge and MTU.
+ip link set dev ${INTERFACE} master tdin${NEW_MTU} mtu ${NEW_MTU}
+
+# Ensure bridge MTU.
+ip link set dev tdin${NEW_MTU} mtu ${NEW_MTU}
+
