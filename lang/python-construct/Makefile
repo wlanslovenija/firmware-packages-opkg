@@ -34,10 +34,7 @@ define Package/python-construct/description
 endef
 
 define Build/Compile
-	$(call Build/Compile/PyMod,,\
-		install --root="$(PKG_INSTALL_DIR)" --prefix="/usr" \
-		--single-version-externally-managed \
-	)
+	$(call Build/Compile/PyMod,,install --prefix="$(PKG_INSTALL_DIR)/usr")
 endef
 
 define Package/python-construct/install
