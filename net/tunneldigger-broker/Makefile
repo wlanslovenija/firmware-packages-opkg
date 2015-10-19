@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/tunneldigger-broker
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+libnl-tiny +kmod-l2tp +kmod-l2tp-ip +kmod-l2tp-eth +librt +libpthread +python +python-six +python-gevent +python-greenlet +libnfnetlink +libnetfilter-conntrack +iptables-mod-conntrack-extra +python-construct +python-netfilter +python-repoze-lru +ebtables +ip-full
+  DEPENDS:=+libnl-tiny +kmod-l2tp +kmod-l2tp-ip +kmod-l2tp-eth +librt +libpthread +python +python-six +python-gevent +python-greenlet +libnfnetlink +libnetfilter-conntrack +iptables-mod-conntrack-extra +python-construct +python-netfilter +python-repoze-lru +ip-full
   TITLE:=tunneldigger-broker
 endef
 
