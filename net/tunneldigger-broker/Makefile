@@ -34,6 +34,8 @@ endef
 define Package/tunneldigger-broker/install
 	$(INSTALL_DIR) $(1)/usr/lib/tunneldigger-broker
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/*.py $(1)/usr/lib/tunneldigger-broker
+	$(INSTALL_DIR) $(1)/lib/functions
+	$(INSTALL_DATA) ./files/tunneldigger.sh $(1)/lib/functions/tunneldigger.sh
 	$(INSTALL_DIR) $(1)/usr/lib/tunneldigger-broker/hooks
 	$(INSTALL_BIN) ./files/hook-setup $(1)/usr/lib/tunneldigger-broker/hooks/setup
 	$(INSTALL_BIN) ./files/hook-teardown $(1)/usr/lib/tunneldigger-broker/hooks/teardown
