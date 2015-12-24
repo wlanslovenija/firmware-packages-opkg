@@ -2,14 +2,14 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nodewatcher-watchdog
 PKG_VERSION:=0.1
-PKG_RELEASE:=4
+PKG_RELEASE:=5
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/nodewatcher-watchdog
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+nodewatcher-core +cronscripts
+  DEPENDS:=+cronscripts
   TITLE:=nodewatcher-watchdog
 endef
 
@@ -23,16 +23,10 @@ define Build/Compile
 endef
 
 define Package/nodewatcher-watchdog/install
-	# Sanity checks
 	$(INSTALL_DIR) $(1)/etc/crontabs/run.5
 	$(INSTALL_BIN) ./files/check_sanity $(1)/etc/crontabs/run.5/00-check_sanity
 	$(INSTALL_BIN) ./files/check_wifi_channel $(1)/etc/crontabs/run.5/01-check_wifi_channel
-	$(INSTALL_BIN) ./files/check_dns $(1)/etc/crontabs/run.5/02-check_dns
 	$(INSTALL_BIN) ./files/check_ath9k_freeze $(1)/etc/crontabs/run.5/01-check_ath9k_freeze
-
-	# Modules
-	$(INSTALL_DIR) $(1)/etc/nodewatcher.d
-	$(INSTALL_DATA) ./files/watchdog.sh $(1)/etc/nodewatcher.d/watchdog.sh
 endef
 
 $(eval $(call BuildPackage,nodewatcher-watchdog))
