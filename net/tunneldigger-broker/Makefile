@@ -1,9 +1,9 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=tunneldigger-broker
-PKG_VERSION:=0.1.1
+PKG_VERSION:=0.2.0
 PKG_RELEASE:=1
-PKG_REV:=89f991fe0922cac4c1dfcafb436117acf43162ba
+PKG_REV:=92418563a84f591b55ce4bee9245073b311c30fb
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=git://github.com/wlanslovenija/tunneldigger.git
@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/tunneldigger-broker
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+libnl-tiny +kmod-l2tp +kmod-l2tp-ip +kmod-l2tp-eth +kmod-sched +librt +libpthread +python +python-six +python-gevent +python-greenlet +libnfnetlink +libnetfilter-conntrack +iptables-mod-conntrack-extra +python-construct +python-netfilter +python-repoze-lru +ip-full
+  DEPENDS:=+libnl-tiny +kmod-l2tp +kmod-l2tp-ip +kmod-l2tp-eth +kmod-sched +librt +libpthread +python +python-six +libnfnetlink +libnetfilter-conntrack +iptables-mod-conntrack-extra +python-netfilter +ip-full
   TITLE:=tunneldigger-broker
 endef
 
@@ -32,8 +32,8 @@ define Build/Compile
 endef
 
 define Package/tunneldigger-broker/install
-	$(INSTALL_DIR) $(1)/usr/lib/tunneldigger-broker
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/*.py $(1)/usr/lib/tunneldigger-broker
+	$(INSTALL_DIR) $(1)/usr/lib/tunneldigger-broker/broker
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/*.py $(1)/usr/lib/tunneldigger-broker/broker
 	$(INSTALL_DIR) $(1)/lib/functions
 	$(INSTALL_DATA) ./files/tunneldigger.sh $(1)/lib/functions/tunneldigger.sh
 	$(INSTALL_DIR) $(1)/usr/lib/tunneldigger-broker/hooks
