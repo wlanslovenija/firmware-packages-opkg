@@ -9,8 +9,24 @@ KEEP_FILES="/etc/crypto/private_key/identity /etc/crypto/certificate/identity /e
 # Location of sysupgrade archive.
 SYSUPGRADE_ARCHIVE="/tmp/nodeupgrade.tgz"
 
+# Parse options.
+FORCE_UUID_MISMATCH=0
+while [ -n "$1" ]; do
+  case "$1" in
+    -f) FORCE_UUID_MISMATCH=1;;
+    -*)
+      echo "Invalid option: $1"
+      exit 1
+      ;;
+    *)
+      break
+      ;;
+  esac
+  shift;
+done
+
 if [ -z "$1" ]; then
-  echo "Usage: $0 <image file or UUID>"
+  echo "Usage: $0 [-f] <image file or UUID>"
   exit 1
 fi
 
@@ -81,9 +97,14 @@ else
   json_get_var node_uuid uuid
   json_get_var node_name name
   if [ "${MY_NODE_UUID}" != "${node_uuid}" ]; then
-    echo "ERROR: This firmware is for node '${node_name}' (${node_uuid})."
-    echo "       You are trying to install on node with UUID '${MY_NODE_UUID}'."
-    exit 1
+    echo "WARNING: This firmware is for node '${node_name}' (${node_uuid})."
+    echo "         You are trying to install on node with UUID '${MY_NODE_UUID}'."
+    echo ""
+    if [ "${FORCE_UUID_MISMATCH}" == 1 ]; then
+      echo "WARNING: Forcing upgrade as requested by -f option."
+    else
+      exit 1
+    fi
   fi
   json_select ..
 
