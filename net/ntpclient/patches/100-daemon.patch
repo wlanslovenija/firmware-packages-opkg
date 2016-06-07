@@ -1,5 +1,5 @@
---- ntpclient-2007.orig/ntpclient.c	2009-09-20 15:11:21.000000000 +0200
-+++ ntpclient-2007/ntpclient.c	2009-09-20 15:11:52.000000000 +0200
+--- a/ntpclient.c	2009-09-20 15:11:21.000000000 +0200
++++ b/ntpclient.c	2009-09-20 15:11:52.000000000 +0200
 @@ -588,7 +588,7 @@
  #ifdef ENABLE_DEBUG
  	" [-d]"
@@ -23,7 +23,7 @@
  				break;
  
 +			case 'D':
-+				daemon();
++				daemon(0, 0);
 +				break;
 +
  			default:
