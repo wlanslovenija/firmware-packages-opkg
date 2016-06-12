@@ -11,6 +11,9 @@ Some packages which are available are for the following software:
 * `tunneldigger`_ – both client and broker
 * nodeupgrade – a program to flash devices with new version of *nodewatcher* firmware
 
+To add the feed to your OpenWrt firmware, add ``https://github.com/wlanslovenija/firmware-packages-opkg.git`` to
+your firmware's ``feeds.conf`` and run ``./scripts/feeds update -a``.
+
 .. _nodewatcher firmware: https://github.com/wlanslovenija/firmware-core
 .. _OpenWrt feed: https://wiki.openwrt.org/doc/devel/feeds
 .. _nodewatcher-agent: https://github.com/wlanslovenija/nodewatcher-agent
