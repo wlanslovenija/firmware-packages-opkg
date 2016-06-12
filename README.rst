@@ -6,6 +6,7 @@ Opkg packages are used by OpenWrt and you can include all these package
 as an `OpenWrt feed`_ into your firmware to get access to them.
 
 Some packages which are available are for the following software:
+
 * `nodewatcher-agent`_ – a monitoring agent for *nodewatcher*
 * `tunneldigger`_ – both client and broker
 * nodeupgrade – a program to flash devices with new version of *nodewatcher* firmware
