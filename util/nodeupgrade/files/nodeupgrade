@@ -65,7 +65,7 @@ else
 
   # Fetch manifest.
   echo ">>> Downloading build result manifest..."
-  local manifest="/tmp/.nodeupgrade-${FIRMWARE_UUID}-manifest.json"
+  manifest="/tmp/.nodeupgrade-${FIRMWARE_UUID}-manifest.json"
   nodeupgrade_get manifest.json ${manifest} 2>/dev/null || {
     echo "ERROR: Unable to fetch build result manifest for '${FIRMWARE_UUID}'."
     exit 1
@@ -73,7 +73,6 @@ else
 
   # Parse the manifest and select a suitable firmware file to download.
   echo ">>> Loading build result manifest..."
-  local selected_filename selected_checksum_md5
   json_load "$(cat ${manifest})"
   json_select files
   json_get_keys manifest_indices
@@ -92,7 +91,6 @@ else
   json_select ..
 
   # Verify that the upgrade is for a correct node.
-  local node_uuid node_name
   json_select node
   json_get_var node_uuid uuid
   json_get_var node_name name
