@@ -26,7 +26,7 @@ define Package/python-netfilter
   SECTION:=lang
   CATEGORY:=Languages
   TITLE:=python-netfilter
-  DEPENDS:=+python +python-setuptools
+  DEPENDS:=+python
 endef
 
 define Package/python-netfilter/description
@@ -34,17 +34,8 @@ define Package/python-netfilter/description
 endef
 
 define Build/Compile
-	$(call Build/Compile/PyMod,,\
-		install --root="$(PKG_INSTALL_DIR)" --prefix="/usr" \
-		--single-version-externally-managed \
-	)
+	$(call Build/Compile/PyMod,,install --prefix=/usr --root=$(PKG_INSTALL_DIR))
 endef
 
-define Package/python-netfilter/install
-	$(INSTALL_DIR) $(1)$(PYTHON_PKG_DIR)
-	$(CP) \
-	    $(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/* \
-	    $(1)$(PYTHON_PKG_DIR)
-endef
-
+$(eval $(call PyPackage,python-netfilter))
 $(eval $(call BuildPackage,python-netfilter))

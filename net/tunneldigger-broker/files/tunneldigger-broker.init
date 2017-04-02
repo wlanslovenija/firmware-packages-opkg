@@ -104,9 +104,8 @@ start_service() {
 	
 	# Start the service using procd.
 	procd_open_instance
-	procd_set_param env PYTHONPATH=/usr/lib/tunneldigger-broker
 	procd_set_param command "/usr/bin/python"
-	procd_append_param command -m broker.main
+	procd_append_param command -m tunneldigger_broker.main
 	procd_append_param command "${CONFIGFILE}"
 	procd_set_param respawn
 	procd_set_param stdout 1
