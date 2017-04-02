@@ -35,6 +35,9 @@ nodeupgrade_get()
   local filename=$1
   local output=$2
 
+  # Sanitize filename for transfer via SCP.
+  filename=$(echo ${filename} | tr -d '+')
+
   scp -P ${NODEUPGRADE_PORT} -i ${NODEUPGRADE_PRIVATE_KEY} ${NODEUPGRADE_USER}@${NODEUPGRADE_SERVER}:/files/generator/${FIRMWARE_UUID}/${filename} ${output}
 }
 
