@@ -1,0 +1,918 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>UNIT 1</title>
+
+		<!-- Bootstrap Styles-->
+	    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+
+	    <!-- Custom Styles-->
+	    <link href="assets/css/custom-styles.css" rel="stylesheet" />
+
+	    <!-- Google Fonts-->
+	    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+<script type='text/javascript'>//<![CDATA[ 
+
+$(function () {
+
+	// Give the points a 3D feel by adding a radial gradient
+	Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function (color) {
+		return {
+			radialGradient: {
+				cx: 0.4,
+				cy: 0.3,
+				r: 0.5
+			},
+
+			stops: [
+				[0, color],
+				[1, Highcharts.Color(color).brighten(-0.2).get('rgb')]
+			]
+		};
+	});
+
+	// Local RX for local movement
+	var chart = new Highcharts.Chart({
+		chart: {
+			renderTo: 'container1',
+			margin: 100,
+			type: 'scatter',
+			options3d: {
+				enabled: true,
+				alpha: 10,
+				beta: 30,
+				depth: 250,
+				viewDistance: 5,
+
+				frame: {
+					bottom: { size: 1, color: 'rgba(0,0,0,0.02)' },
+					back: { size: 1, color: 'rgba(0,0,0,0.04)' },
+					side: { size: 1, color: 'rgba(0,0,0,0.06)' }
+				}
+			},
+
+			events: {
+				load: function () {
+
+					// set up the updating of the chart each second
+					var series1 = this.series[0];
+
+					setInterval(function () {
+						var vrednostX = 0;
+						var vrednostY = 0;
+						var vrednostZ = 0;
+
+						$.ajax({
+							url: 'koruza/last_state.json?rand='+Math.random(),
+							dataType: 'json',
+							async: false,
+							success: function(data) {
+								vrednostX = data.state6;
+								vrednostY = data.state17;
+								vrednostZ = data.state7;
+							}
+						});
+
+						var x = vrednostX, y = vrednostY, z = vrednostZ;
+
+						series1.addPoint([x, y, z], true, true);
+					}, 1000);
+				}
+			}
+		},
+
+		dataLabels: {
+			enabled: true,
+			style: {
+				fontWeight: 'bold'
+			},
+			formatter: function() {
+				if (this.y != 0) {
+					return this.y +'%';
+				} else {
+					return null;
+				}
+			}
+		},
+
+		title: {
+			text: 'Local RX for local movement'
+		},
+
+		plotOptions: {
+			scatter: {
+				width: 10,
+				height: 10,
+				depth: 10
+			}
+		},
+
+		credits: {
+			enabled: false
+		},
+
+		yAxis: {
+			title: null
+		},
+
+		xAxis: {
+			gridLineWidth: 1
+		},
+
+		zAxis: {
+			showFirstLabel: false
+		},
+
+		legend: {
+			enabled: false
+		},
+
+		series: [{
+			name: 'Reading',
+			colorByPoint: false,
+			data: (function () {
+				var data = [], time = (new Date()).getTime(), i;
+
+				for (i = -19; i <= 0; i += 1) {
+					data.push({
+						x: 0,
+						y: 0,
+						z: 0
+					});
+				}
+				return data;
+			}())
+		}]
+	});
+
+	// RemoteRX for local movement
+	var chart = new Highcharts.Chart({
+		chart: {
+			renderTo: 'container2',
+			margin: 100,
+			type: 'scatter',
+			options3d: {
+				enabled: true,
+				alpha: 10,
+				beta: 30,
+				depth: 250,
+				viewDistance: 5,
+
+				frame: {
+					bottom: { size: 1, color: 'rgba(0,0,0,0.02)' },
+					back: { size: 1, color: 'rgba(0,0,0,0.04)' },
+					side: { size: 1, color: 'rgba(0,0,0,0.06)' }
+				}
+			},
+
+			events: {
+				load: function () {
+
+					// set up the updating of the chart each second
+					var series1 = this.series[0];
+
+					setInterval(function () {
+						var vrednostX = 0;
+						var vrednostY = 0;
+						var vrednostZ = 0;
+
+						$.ajax({
+							url: 'koruza/last_state.json?rand='+Math.random(),
+							dataType: 'json',
+							async: false,
+							success: function(data) {
+								vrednostX = data.state6;
+								vrednostY = data.state21;
+								vrednostZ = data.state7;
+							}
+						});
+
+						var x = vrednostX, y = vrednostY, z = vrednostZ;
+
+						series1.addPoint([x, y, z], true, true);
+					}, 1000);
+				}
+			}
+		},
+
+		dataLabels: {
+			enabled: true,
+			style: {
+				fontWeight: 'bold'
+			},
+			formatter: function() {
+				if (this.y != 0) {
+					return this.y +'%';
+				} else {
+					return null;
+				}
+			}
+		},
+
+		title: {
+			text: 'RemoteRX for local movement'
+		},
+
+		plotOptions: {
+			scatter: {
+				width: 10,
+				height: 10,
+				depth: 10
+			}
+		},
+
+		yAxis: {
+			title: null
+		},
+
+		xAxis: {
+			gridLineWidth: 1
+		},
+
+		zAxis: {
+			showFirstLabel: false
+		},
+
+		credits: {
+			enabled: false
+		},
+
+		legend: {
+			enabled: false
+		},
+
+		series: [{
+			name: 'Reading',
+			colorByPoint: false,
+			data: (function () {
+				var data = [], time = (new Date()).getTime(), i;
+
+				for (i = -19; i <= 0; i += 1) {
+					data.push({
+						x: 0,
+						y: 0,
+						z: 0
+					});
+				}
+				return data;
+			}())
+		}]
+	});
+
+	// Add mouse events for rotation
+	/*$(chart.container).bind('mousedown.hc touchstart.hc', function (e) {
+		e = chart.pointer.normalize(e);
+
+		var posX = e.pageX, posY = e.pageY, alpha = chart.options.chart.options3d.alpha, beta = chart.options.chart.options3d.beta, newAlpha, newBeta, sensitivity = 5; // lower is more sensitive
+
+		$(document).bind({
+			'mousemove.hc touchdrag.hc': function (e) {
+
+				// Run beta
+				newBeta = beta + (posX - e.pageX) / sensitivity;
+				chart.options.chart.options3d.beta = newBeta;
+
+				// Run alpha
+				newAlpha = alpha + (e.pageY - posY) / sensitivity;
+				chart.options.chart.options3d.alpha = newAlpha;
+
+				chart.redraw(false);
+			},
+			'mouseup touchend': function () {
+				$(document).unbind('.hc');
+			}
+		});
+	});*/
+});
+//]]>  
+</script>
+
+<script type='text/javascript'>//<![CDATA[ 
+$(function () {
+	$(document).ready(function () {
+		Highcharts.setOptions({
+			global: {
+				useUTC: false
+			}
+		});
+
+		//State value
+	    			$('#container3').highcharts({
+	    				chart: {
+	    					type: 'spline',
+	    					animation: Highcharts.svg, // don't animate in old IE
+	    					marginRight: 10,
+	    					events: {
+	    						load: function () {
+
+	    							// set up the updating of the chart each second
+	    							var series1 = this.series[0];
+
+	    							setInterval(function () {
+	    								var vrednostY1=0;
+
+	    								$.ajax({
+	    									url: 'koruza/last_state.json?rand='+Math.random(),
+	    									dataType: 'json',
+	    									async: false,
+	    									success: function(data) {
+	    										vrednostY1=data.state20;
+	    									}
+	    								});
+
+	    								var x = (new Date()).getTime(), // current time
+	    								y1 = vrednostY1;
+
+	    								series1.addPoint([x, y1], true, true);
+	    							}, 1000);
+	    						}
+	    					}
+	    				},
+
+	    				dataLabels: {
+	    					enabled: true,
+	    					style: {
+	    						fontWeight: 'bold'
+	    					},
+	    					formatter: function() {
+	    						if (this.y != 0) {
+	    							return this.y +'%';
+	    						} else {
+	    							return null;
+	    						}
+	    					}
+	    				},
+
+	    				title: {
+	    					text: 'State value'
+	    				},
+
+	    				xAxis: {
+	    					type: 'datetime',
+	    					tickPixelInterval: 150
+	    				},
+	    				
+	    				yAxis: {
+	    					title: {
+	    						text: 'Value'
+	    					},
+
+	    					plotLines: [{
+	    						value: 0,
+	    						width: 1,
+	    						color: '#808080'
+	    					}]
+	    				},
+
+	    				tooltip: {
+	    					formatter: function () {
+	    						return '<b>' + this.series.name + '</b><br/>' +
+	    						Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+	    						Highcharts.numberFormat(this.y, 2);
+	    					}
+	    				},
+
+	    				legend: {
+	    					enabled: false
+	    				},
+
+	    				credits: {
+	    					enabled: false
+	    				},
+
+	    				exporting: {
+	    					enabled: false
+	    				},
+
+	    				series: [{
+	    					name: 'State 1',
+	    					data: (function () {
+	    						// generate an array of random data
+	    						var data = [],
+	    						time = (new Date()).getTime(),
+	    						i;
+
+	    						for (i = -19; i <= 0; i += 1) {
+	    							data.push({
+	    								x: time + i * 1000,
+	    								y: 0
+	    							});
+	    						}
+	    						return data;
+	    					}())
+	    				},
+	    				{
+	    					name: 'State 2',
+	    					data: (function () {
+	    						// generate an array of random data
+	    						var data = [],
+	    						time = (new Date()).getTime(),
+	    						i;
+
+	    						for (i = -19; i <= 0; i += 1) {
+	    							data.push({
+	    								x: time + i * 1000,
+	    								y: 0
+	    							});
+	    						}
+	    						return data;
+	    					}())
+	    				},
+	    				{
+	    					name: 'State 3',
+	    					data: (function () {
+	    						// generate an array of random data
+	    						var data = [],
+	    						time = (new Date()).getTime(),
+	    						i;
+
+	    						for (i = -19; i <= 0; i += 1) {
+	    							data.push({
+	    								x: time + i * 1000,
+	    								y: 0
+	    							});
+	    						}
+	    						return data;
+	    					}())
+	    				}]
+	    			});
+
+					//Temperature 1,2,3
+	    			$('#container4').highcharts({
+	    				chart: {
+	    					type: 'spline',
+	    					animation: Highcharts.svg, // don't animate in old IE
+	    					marginRight: 10,
+	    					events: {
+	    						load: function () {
+
+	    							// set up the updating of the chart each second
+	    							var series1 = this.series[0];
+	    							var series2 = this.series[1];
+	    							var series3 = this.series[2];
+
+	    							setInterval(function () {
+	    								var vrednostY1=0;
+	    								var vrednostY2=0;
+	    								var vrednostY3=0;
+
+	    								$.ajax({
+	    									url: 'koruza/last_state.json?rand='+Math.random(),
+	    									dataType: 'json',
+	    									async: false,
+	    									success: function(data) {
+	    										vrednostY1=data.state1;
+	    										vrednostY2=data.state13;
+	    										vrednostY3=data.state14;
+	    									}
+	    								});
+
+	    								var x = (new Date()).getTime(), // current time
+	    								y1 = vrednostY1,
+	    								y2 = vrednostY2,
+	    								y3 = vrednostY3;
+
+	    								series1.addPoint([x, y1], true, true);
+	    								series2.addPoint([x, y2], true, true);
+	    								series3.addPoint([x, y3], true, true);
+	    							}, 1000);
+	    						}
+	    					}
+	    				},
+
+	    				dataLabels: {
+	    					enabled: true,
+	    					style: {
+	    						fontWeight: 'bold'
+	    					},
+	    					formatter: function() {
+	    						if (this.y != 0) {
+	    							return this.y +'%';
+	    						} else {
+	    							return null;
+	    						}
+	    					}
+	    				},
+
+	    				title: {
+	    					text: 'Temperature 1,2,3'
+	    				},
+
+	    				xAxis: {
+	    					type: 'datetime',
+	    					tickPixelInterval: 150
+	    				},
+	    				
+	    				yAxis: {
+	    					title: {
+	    						text: 'Value'
+	    					},
+
+	    					plotLines: [{
+	    						value: 0,
+	    						width: 1,
+	    						color: '#808080'
+	    					}]
+	    				},
+
+	    				tooltip: {
+	    					formatter: function () {
+	    						return '<b>' + this.series.name + '</b><br/>' +
+	    						Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+	    						Highcharts.numberFormat(this.y, 2);
+	    					}
+	    				},
+
+	    				legend: {
+	    					enabled: false
+	    				},
+
+	    				credits: {
+	    					enabled: false
+	    				},
+
+	    				exporting: {
+	    					enabled: false
+	    				},
+
+	    				series: [{
+	    					name: 'State 1',
+	    					data: (function () {
+	    						// generate an array of random data
+	    						var data = [],
+	    						time = (new Date()).getTime(),
+	    						i;
+
+	    						for (i = -19; i <= 0; i += 1) {
+	    							data.push({
+	    								x: time + i * 1000,
+	    								y: 0
+	    							});
+	    						}
+	    						return data;
+	    					}())
+	    				},
+	    				{
+	    					name: 'State 2',
+	    					data: (function () {
+	    						// generate an array of random data
+	    						var data = [],
+	    						time = (new Date()).getTime(),
+	    						i;
+
+	    						for (i = -19; i <= 0; i += 1) {
+	    							data.push({
+	    								x: time + i * 1000,
+	    								y: 0
+	    							});
+	    						}
+	    						return data;
+	    					}())
+	    				},
+	    				{
+	    					name: 'State 3',
+	    					data: (function () {
+	    						// generate an array of random data
+	    						var data = [],
+	    						time = (new Date()).getTime(),
+	    						i;
+
+	    						for (i = -19; i <= 0; i += 1) {
+	    							data.push({
+	    								x: time + i * 1000,
+	    								y: 0
+	    							});
+	    						}
+	    						return data;
+	    					}())
+	    				}]
+	    			});
+
+					//Alignment variables
+	    			$('#container5').highcharts({
+	    				chart: {
+	    					type: 'spline',
+	    					animation: Highcharts.svg, // don't animate in old IE
+	    					marginRight: 10,
+	    					events: {
+	    						load: function () {
+
+	    							// set up the updating of the chart each second
+	    							var series1 = this.series[0];
+	    							var series2 = this.series[1];
+	    							var series3 = this.series[2];
+
+	    							setInterval(function () {
+	    								var vrednostY1=0;
+	    								var vrednostY2=0;
+	    								var vrednostY3=0;
+
+	    								$.ajax({
+	    									url: 'koruza/last_state.json?rand='+Math.random(),
+	    									dataType: 'json',
+	    									async: false,
+	    									success: function(data) {
+	    										vrednostY1=data.state16;
+	    										vrednostY2=data.state22;
+	    										vrednostY3=data.state23;
+	    									}
+	    								});
+
+	    								var x = (new Date()).getTime(), // current time
+	    								y1 = vrednostY1,
+	    								y2 = vrednostY2,
+	    								y3 = vrednostY3;
+
+	    								series1.addPoint([x, y1], true, true);
+	    								series2.addPoint([x, y2], true, true);
+	    								series3.addPoint([x, y3], true, true);
+	    							}, 1000);
+	    						}
+	    					}
+	    				},
+
+	    				dataLabels: {
+	    					enabled: true,
+	    					style: {
+	    						fontWeight: 'bold'
+	    					},
+	    					formatter: function() {
+	    						if (this.y != 0) {
+	    							return this.y +'%';
+	    						} else {
+	    							return null;
+	    						}
+	    					}
+	    				},
+
+	    				title: {
+	    					text: 'Alignment variables'
+	    				},
+
+	    				xAxis: {
+	    					type: 'datetime',
+	    					tickPixelInterval: 150
+	    				},
+	    				
+	    				yAxis: {
+	    					title: {
+	    						text: 'Value'
+	    					},
+
+	    					plotLines: [{
+	    						value: 0,
+	    						width: 1,
+	    						color: '#808080'
+	    					}]
+	    				},
+
+	    				tooltip: {
+	    					formatter: function () {
+	    						return '<b>' + this.series.name + '</b><br/>' +
+	    						Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+	    						Highcharts.numberFormat(this.y, 2);
+	    					}
+	    				},
+
+	    				legend: {
+	    					enabled: false
+	    				},
+
+	    				credits: {
+	    					enabled: false
+	    				},
+
+	    				exporting: {
+	    					enabled: false
+	    				},
+
+	    				series: [{
+	    					name: 'State 1',
+	    					data: (function () {
+	    						// generate an array of random data
+	    						var data = [],
+	    						time = (new Date()).getTime(),
+	    						i;
+
+	    						for (i = -19; i <= 0; i += 1) {
+	    							data.push({
+	    								x: time + i * 1000,
+	    								y: 0
+	    							});
+	    						}
+	    						return data;
+	    					}())
+	    				},
+	    				{
+	    					name: 'State 2',
+	    					data: (function () {
+	    						// generate an array of random data
+	    						var data = [],
+	    						time = (new Date()).getTime(),
+	    						i;
+
+	    						for (i = -19; i <= 0; i += 1) {
+	    							data.push({
+	    								x: time + i * 1000,
+	    								y: 0
+	    							});
+	    						}
+	    						return data;
+	    					}())
+	    				},
+	    				{
+	    					name: 'State 3',
+	    					data: (function () {
+	    						// generate an array of random data
+	    						var data = [],
+	    						time = (new Date()).getTime(),
+	    						i;
+
+	    						for (i = -19; i <= 0; i += 1) {
+	    							data.push({
+	    								x: time + i * 1000,
+	    								y: 0
+	    							});
+	    						}
+	    						return data;
+	    					}())
+	    				}]
+	    			});
+
+				});
+			});
+		//]]>  
+		</script>
+
+		<script type='text/javascript'>//<![CDATA[ 
+			$(function () {
+				$(document).ready(function () {
+
+					setInterval(function () {
+						$.ajax({
+							url: 'koruza/last_state.json?rand='+Math.random(),
+							dataType: 'json',
+							async: false,
+							success: function(data) {
+								console.log(data.state1);
+								$('#status1').val(data.state1);
+								$('#status6').val(data.state6);
+								$('#status7').val(data.state7);
+								$('#status13').val(data.state13);
+								$('#status14').val(data.state14);
+								$('#status16').val(data.state16);
+								$('#status17').val(data.state17);
+								$('#status21').val(data.state21);
+								$('#status22').val(data.state22);
+								$('#status23').val(data.state23);
+							}
+						});
+					}, 1000);
+				});
+			});
+			//]]>  
+		</script>
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<div id="page-wrapper">
+				<div id="page-inner">
+					<div class="row">
+						<div class="col-md-12">
+							<h1 class="page-header">
+								KORUZA wwk-3a <small>Real-time data plot</small>
+							</h1>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-1 col-md-2 col-sm-4 col-xs-6">
+							<div class="panel panel-primary text-center no-boder bg-color-blue">
+								<div class="panel-body">
+									<h3><input id="status6" name="status6" type="text" class="col-xs-12"/></h3>
+								</div>
+								<div class="panel-footer back-footer-blue">Pos X</div>
+							</div>
+						</div>
+
+						<div class="col-lg-1 col-md-2 col-sm-4 col-xs-6">
+							<div class="panel panel-primary text-center no-boder bg-color-blue">
+								<div class="panel-body">
+									<h3><input id="status7" name="status7" type="text" class="col-xs-12"/></h3>
+								</div>
+								<div class="panel-footer back-footer-blue">Pos Y</div>
+							</div>
+						</div>
+
+						<div class="col-lg-1 col-md-2 col-sm-4 col-xs-6">
+							<div class="panel panel-primary text-center no-boder bg-color-blue">
+								<div class="panel-body">
+									<h3><input id="status17" name="status17" type="text" class="col-xs-12"/></h3>
+								</div>
+								<div class="panel-footer back-footer-blue">Local (dB)</div>
+							</div>
+						</div>
+
+						<div class="col-lg-1 col-md-2 col-sm-4 col-xs-6">
+							<div class="panel panel-primary text-center no-boder bg-color-blue">
+								<div class="panel-body">
+									<h3><input id="status21" name="status21" type="text" class="col-xs-12"/></h3>
+								</div>
+								<div class="panel-footer back-footer-blue">Remote (dB)</div>
+							</div>
+						</div>
+
+						<div class="col-lg-1 col-md-2 col-sm-4 col-xs-6">
+							<div class="panel panel-primary text-center no-boder bg-color-green">
+								<div class="panel-body">
+									<h3><input id="status1" name="status1" type="text" class="col-xs-12"/></h3>
+								</div>
+								<div class="panel-footer back-footer-green">SFP (℃)</div>
+							</div>
+						</div>
+
+						<div class="col-lg-1 col-md-2 col-sm-4 col-xs-6">
+							<div class="panel panel-primary text-center no-boder bg-color-green">
+								<div class="panel-body">
+									<h3><input id="status13" name="status13" type="text" class="col-xs-12"/></h3>
+								</div>
+								<div class="panel-footer back-footer-green">Case (℃)</div>
+							</div>
+						</div>
+
+						<div class="col-lg-1 col-md-2 col-sm-4 col-xs-6">
+							<div class="panel panel-primary text-center no-boder bg-color-green">
+								<div class="panel-body">
+									<h3><input id="status14" name="status14" type="text" class="col-xs-12"/></h3>
+								</div>
+								<div class="panel-footer back-footer-green">Air (℃)</div>
+							</div>
+						</div>
+
+						<div class="col-lg-1 col-md-2 col-sm-4 col-xs-6">
+							<div class="panel panel-primary text-center no-boder bg-color-brown">
+								<div class="panel-body">
+									<h3><input id="status16" name="status16" type="text" class="col-xs-12"/></h3>
+								</div>
+								<div class="panel-footer back-footer-brown">A1</div>
+							</div>
+						</div>
+
+						<div class="col-lg-1 col-md-2 col-sm-4 col-xs-6">
+							<div class="panel panel-primary text-center no-boder bg-color-brown">
+								<div class="panel-body">
+									<h3><input id="status22" name="status22" type="text" class="col-xs-12"/></h3>
+								</div>
+								<div class="panel-footer back-footer-brown">A2</div>
+							</div>
+						</div>
+
+						<div class="col-lg-1 col-md-2 col-sm-4 col-xs-6">
+							<div class="panel panel-primary text-center no-boder bg-color-brown">
+								<div class="panel-body">
+									<h3><input id="status23" name="status23" type="text" class="col-xs-12"/></h3>
+								</div>
+								<div class="panel-footer back-footer-brown">A3</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<!-- <div id="container1" class="col-xs-12 col-lg-6"></div>
+						<div id="container2" class="col-xs-12 col-lg-6"></div>
+						<div id="container3" class="col-xs-12 col-sm-6 col-md-4"></div>
+						<div id="container4" class="col-xs-12 col-sm-6 col-md-4"></div>
+						<div id="container5" class="col-xs-12 col-sm-6 col-md-4"></div> -->
+
+						<div id="container1" class="col-xs-6"></div>
+						<div id="container2" class="col-xs-6"></div>
+						<div id="container3" class="col-xs-4"></div>
+						<div id="container4" class="col-xs-4"></div>
+						<div id="container5" class="col-xs-4"></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	    <!-- JS Scripts-->
+	    
+	    <!-- Bootstrap Js -->
+	    <script src="assets/js/bootstrap.min.js"></script>
+	    
+	    <!-- Custom Js -->
+	    <!-- <script src="assets/js/custom-scripts.js"></script> -->
+
+	    <script src="http://code.highcharts.com/highcharts.js"></script>
+	    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+	    <script src="http://code.highcharts.com/highcharts-3d.js"></script>
+	</body>
+</html>
