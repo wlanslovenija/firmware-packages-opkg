@@ -3,13 +3,14 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=tunneldigger-broker
 PKG_VERSION:=0.3.0
 PKG_RELEASE:=1
-PKG_REV:=235e111fb8fa02c4687af7f695e21204d9d28fe6
+PKG_REV:=$(PKG_SOURCE_VERSION)
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=git://github.com/wlanslovenija/tunneldigger.git
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
+PKG_SOURCE_URL:=https://github.com/wlanslovenija/tunneldigger.git
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=$(PKG_REV)
+PKG_SOURCE_VERSION:=235e111fb8fa02c4687af7f695e21204d9d28fe6
+PKG_MIRROR_HASH:=88c2f854270213f973f787f49e59adcfcafd6cbd9a4b5f49ab8f62ea73583a82
 
 PKG_BUILD_DEPENDS:=python-cffi/host
 
